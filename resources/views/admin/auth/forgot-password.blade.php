@@ -49,6 +49,9 @@
                             </div>
 
                             <div class="card-body">
+                                @if (session()->has('success'))
+                                    <i><b style="color:green">{{ session()->get('success') }}</b></i>
+                                @endif
                                 <form method="POST" action="{{ route('admin.forgot-password.send') }}"
                                     class="needs-validation" novalidate="">
                                     @csrf

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Login &mdash; Stisla</title>
+    <title>Reset Password &mdash; Stisla</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/assets') }}/modules/bootstrap/css/bootstrap.min.css">
@@ -45,54 +45,49 @@
 
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h4>Login</h4>
+                                <h4>Reset Password</h4>
                             </div>
 
                             <div class="card-body">
-                                @if (session()->has('success'))
-                                    <i><b style="color:green">{{ session()->get('success') }}</b></i>
-                                @endif
-                                <form method="POST" action="{{route('admin.handle-login')}}" class="needs-validation" novalidate="">
+                                <form method="POST" action="{{ route('admin.reset-password.send') }}"
+                                    class="needs-validation" novalidate="">
                                     @csrf
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         <input id="email" type="email" class="form-control" name="email"
-                                            tabindex="1" required autofocus>
-                                            @error('email')
-                                                <code>{{$message}}</code>
-                                            @enderror
+                                            value="{{ request()->email }}" tabindex="1" required autofocus>
+                                        <input id="email" type="hidden" class="form-control" name="token"
+                                            tabindex="1" required autofocus value="{{ $token }}">
+                                        @error('email')
+                                            <code>{{ $message }}</code>
+                                        @enderror
                                         <div class="invalid-feedback">
                                             Please fill in your email
                                         </div>
                                     </div>
-
                                     <div class="form-group">
-                                        <div class="d-block">
-                                            <label for="password" class="control-label">Password</label>
-                                            <div class="float-right">
-                                                <a href="{{route('admin.forgot-password')}}" class="text-small">
-                                                    Forgot Password?
-                                                </a>
-                                            </div>
-                                        </div>
+                                        <label for="email">Password</label>
                                         <input id="password" type="password" class="form-control" name="password"
-                                            tabindex="2" required>
+                                            tabindex="1" required autofocus>
+                                        @error('password')
+                                            <code>{{ $message }}</code>
+                                        @enderror
                                         <div class="invalid-feedback">
-                                            please fill in your password
+                                            Please fill in your password
                                         </div>
                                     </div>
-
                                     <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="remember" class="custom-control-input"
-                                                tabindex="3" id="remember-me">
-                                            <label class="custom-control-label" for="remember-me">Remember Me</label>
+                                        <label for="email">Confirm Password</label>
+                                        <input id="password" type="password" class="form-control"
+                                            name="password_confirmation" tabindex="1" required autofocus>
+                                        <div class="invalid-feedback">
+                                            Please fill in your password confirmation
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                                            Login
+                                            Save
                                         </button>
                                     </div>
                                 </form>

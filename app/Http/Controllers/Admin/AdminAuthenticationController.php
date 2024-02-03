@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminResetPasswordRequest;
 use App\Http\Requests\HandleLoginRequest;
 use App\Http\Requests\SendResetLinkRequest;
+use App\Mail\AdminSendResetLinkMail;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 
 class AdminAuthenticationController extends Controller
@@ -40,22 +44,33 @@ class AdminAuthenticationController extends Controller
 
     public function sendResetLink(SendResetLinkRequest $request)
     {
-        dd($request->all());
-        // $request->validate([
-        //     'email' => ['required', 'email'],
-        // ]);
+        $token = \Str::random(64);
+        $admin = Admin::where('email',$request->email)->first();
+        $admin->remember_token = $token;
+        $admin->save();
+        Mail::to($request->email)->send(new AdminSendResetLinkMail($token, $request->email));
+        return redirect()->back()->with('success', 'A mail has been sent to your email address please check!');
+    }
 
-        // // We will send the password reset link to this user. Once we have attempted
-        // // to send the link, we will examine the response then see the message we
-        // // need to show to the user. Finally, we'll send out a proper response.
-        // $status = Password::sendResetLink(
-        //     $request->only('email')
-        // );
+    public function resetPassword($token)
+    {
+        return view('admin.auth.reset-password', compact('token'));
+    }
 
-        // return $status == Password::RESET_LINK_SENT
-        //             ? back()->with('status', __($status))
-        //             : back()->withInput($request->only('email'))
-        //                     ->withErrors(['email' => __($status)]);
+    public function handleResetPassword(AdminResetPasswordRequest $request)
+    {
+        $admin = Admin::where(['email' => $request->email, 'remember_token' => $request->token])->first();
+
+        if(!$admin){
+            return back()->with('error','The token is invalid');
+        }
+
+        $admin->password = bcrypt($request->password);
+        $admin->remember_token = null;
+        $admin->save();
+
+        return redirect()->route('admin.login')->with('success','Password reset successful');
+
     }
 }
 
