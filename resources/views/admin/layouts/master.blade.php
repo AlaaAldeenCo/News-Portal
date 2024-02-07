@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>General Dashboard &mdash; Stisla</title>
 
@@ -13,6 +14,11 @@
     <!-- CSS Libraries -->
 
     <link rel="stylesheet" href="{{ asset('admin/assets') }}/modules/summernote/summernote-bs4.css">
+    <link rel="stylesheet" href="{{ asset('admin/assets') }}/modules/select2/dist/css/select2.min.css">
+
+    <link rel="stylesheet" href="{{ asset('admin/assets') }}/modules/datatables/datatables.min.css">
+    <link rel="stylesheet"
+        href="{{ asset('admin/assets') }}/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('admin/assets') }}/css/style.css">
@@ -59,9 +65,18 @@
 
     <!-- JS Libraies -->
     <script src="{{ asset('admin/assets') }}/modules/summernote/summernote-bs4.js"></script>
+    <script src="{{ asset('admin/assets') }}/modules/select2/dist/js/select2.full.min.js"></script>
+
+    <script src="{{ asset('admin/assets') }}/modules/datatables/datatables.min.js"></script>
+    <script src="{{ asset('admin/assets') }}/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js">
+    </script>
+    <script src="{{ asset('admin/assets') }}/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
 
     <!-- Page Specific JS File -->
+    {{-- <script src="{{ asset('admin/assets') }}/js/page/modules-datatables.js"></script> --}}
     {{-- <script src="{{asset('admin/assets')}}/js/page/index-0.js"></script> --}}
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
 
 
@@ -79,6 +94,58 @@
             no_label: false, // Default: false
             success_callback: null // Default: null
         });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function() {
+
+$('.delete-item').on('click', function(e) {
+    e.preventDefault();
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let url = $(this).attr('href');
+            console.log(url);
+            $.ajax({
+                method: 'DELETE',
+                url: url,
+                success: function(data) {
+                    if (data.status === 'success') {
+                        Swal.fire(
+                            'Deleted!',
+                            data.message,
+                            'success'
+                        )
+                        window.location.reload();
+                    } else if (data.status === 'error') {
+                        Swal.fire(
+                            'Error!',
+                            data.message,
+                            'error'
+                        )
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+
+        }
+    })
+})
+})
     </script>
 
     @stack('scripts')
