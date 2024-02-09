@@ -37,5 +37,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     Route::resource('category', CategoryController::class);
 
     /* News Routs */
+    Route::get('fetch-news-category', [NewsController::class, 'fecthCategory'])->name('fetch-news-category');
     Route::resource('news', NewsController::class);
 });
