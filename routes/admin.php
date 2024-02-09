@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminAuthenticationController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     /* Language Route */
     Route::resource('language', LanguageController::class);
 
-    /** Category Route */
+    /* Category Route */
     Route::resource('category', CategoryController::class);
+
+    /* News Routs */
+    Route::resource('news', NewsController::class);
 });
