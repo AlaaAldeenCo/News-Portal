@@ -63,25 +63,25 @@
                                                     <td>{{ $item->category->name }}</td>
                                                     <td>
                                                         <label class="custom-switch mt-2">
-                                                            <input {{$item->is_breaking_news === 1 ? 'checked':''}} type="checkbox" name="is_breaking_news" class="custom-switch-input" >
+                                                            <input {{$item->is_breaking_news === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="is_breaking_news" class="custom-switch-input toggle-status" >
                                                             <span class="custom-switch-indicator"></span>
                                                           </label>
                                                     </td>
                                                     <td>
                                                         <label class="custom-switch mt-2">
-                                                            <input {{$item->show_at_slider === 1 ? 'checked':''}} type="checkbox" name="show_at_slider" class="custom-switch-input" >
+                                                            <input {{$item->show_at_slider === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="show_at_slider" class="custom-switch-input toggle-status" >
                                                             <span class="custom-switch-indicator"></span>
                                                           </label>
                                                     </td>
                                                     <td>
                                                         <label class="custom-switch mt-2">
-                                                            <input {{$item->show_at_popular === 1 ? 'checked':''}} type="checkbox" name="show_at_popular" class="custom-switch-input" >
+                                                            <input {{$item->show_at_popular === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="show_at_popular" class="custom-switch-input toggle-status" >
                                                             <span class="custom-switch-indicator"></span>
                                                           </label>
                                                     </td>
                                                     <td>
                                                         <label class="custom-switch mt-2">
-                                                            <input {{$item->status === 1 ? 'checked':''}} type="checkbox" name="status" class="custom-switch-input" >
+                                                            <input {{$item->status === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="status" class="custom-switch-input toggle-status" >
                                                             <span class="custom-switch-indicator"></span>
                                                           </label>
                                                     </td>
@@ -125,5 +125,35 @@
                 ]
             });
         @endforeach
+
+        $(document).ready(function(){
+            $('.toggle-status').on('click', function(){
+                let id = $(this).data('id');
+                let name = $(this).data('name');
+                let status = $(this).prop('checked') ? 1:0;
+
+                $.ajax({
+                    mehod: 'GET',
+                    url: "{{route('admin.toggle-news-status')}}",
+                    data: {
+                        id: id,
+                        name: name,
+                        status: status
+                    },
+                    success: function(data){
+                        if(data.status === 'success')
+                        {
+                            Toast.fire({
+                                icon: 'success',
+                                title: data.message
+                            })
+                        }
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                })
+            })
+        })
     </script>
 @endpush

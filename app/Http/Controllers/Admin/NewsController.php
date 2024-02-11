@@ -85,7 +85,10 @@ class NewsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $languages = Language::all();
+        $news = News::findOrFail($id);
+        $categories = Category::where('language', $news->language)->get();
+        return view('admin.news.edit', compact('languages', 'news','categories'));
     }
 
     /**
@@ -93,7 +96,43 @@ class NewsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $news = News::findOrFail($id);
+        $imagePath = $this->handleFileUpload($request, 'image');
+        $news->language = $request->language;
+        $news->category_id = $request->category;
+        $news->image = !empty($imagePath) ? $imagePath: $news->image;
+        $news->title = $request->title;
+        $news->slug = \Str::slug($request->title);
+        $news->content = $request->content;
+        $news->meta_title = $request->meta_title;
+        $news->meta_description = $request->meta_description;
+        $news->is_breaking_news = $request->is_breaking_news == 1 ? 1 : 0;
+        $news->show_at_slider = $request->show_at_slider == 1 ? 1 : 0;
+        $news->show_at_popular = $request->show_at_popular == 1 ? 1 : 0;
+        $news->status = $request->status == 1 ? 1 : 0;
+        $news->save();
+
+        $tags = explode(',', $request->tags);
+        $tagsId = [];
+
+        /* Delete Previos Tags */
+        $news->tags()->delete();
+
+        /* Detach Tags Form Pivot Table */
+        $news->tags()->detach($news->tags);
+
+        foreach($tags as $tag)
+        {
+            $item = new Tag();
+            $item->name = $tag;
+            $item->language = $news->language;
+            $item->save();
+            $tagsId[] = $item ->id;
+        }
+
+        $news->tags()->attach($tagsId);
+        toast(__('Update Successfully!'), 'success')->width('350');
+        return redirect()->route('admin.news.index');
     }
 
     /**
@@ -101,7 +140,12 @@ class NewsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $news = News::findOrFail($id);
+        $this->deleteFile($news->image);
+        $news->tags()->delete();
+        $news->delete();
+        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
+
     }
 
     /**
@@ -111,5 +155,22 @@ class NewsController extends Controller
     {
         $categories = Category::where('language', $request->lang)->get();
         return $categories;
+    }
+
+    /* Change The Toggle Button Status */
+    public function toggleNewsStatus(Request $request)
+    {
+        try
+        {
+            $news = News::findOrFail($request->id);
+            $news->{$request->name} = $request->status;
+            $news->save();
+            return response(['status' => 'success', 'message'=> __('Updated Successfully')]);
+        }
+        catch(\Throwable $th)
+        {
+            throw $th;
+        }
+
     }
 }
