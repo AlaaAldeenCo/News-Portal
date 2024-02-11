@@ -59,7 +59,7 @@
                                                 <tr>
                                                     <td>{{ $item->id }}</td>
                                                     <td><img src="{{asset($item->image)}}" width="80"></td>
-                                                    <td style="width: 120px">{{ $item->title }}</td>
+                                                    <td style="width: 90px">{{ $item->title }}</td>
                                                     <td>{{ $item->category->name }}</td>
                                                     <td>
                                                         <label class="custom-switch mt-2">
@@ -79,7 +79,7 @@
                                                             <span class="custom-switch-indicator"></span>
                                                           </label>
                                                     </td>
-                                                    <td>
+                                                    <td style="width: 30px">
                                                         <label class="custom-switch mt-2">
                                                             <input {{$item->status === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="status" class="custom-switch-input toggle-status" >
                                                             <span class="custom-switch-indicator"></span>
@@ -93,6 +93,8 @@
                                                         <a href="{{ route('admin.news.destroy', $item->id) }}"
                                                             class="btn btn-danger delete-item"><i
                                                                 class="fas fa-trash-alt"></i></a>
+                                                            <a href="{{ route('admin.news-copy', $item->id) }}"
+                                                                class="btn btn-primary"><i class="fas fa-copy"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach

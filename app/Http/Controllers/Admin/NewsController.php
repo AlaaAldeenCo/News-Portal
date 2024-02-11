@@ -173,4 +173,13 @@ class NewsController extends Controller
         }
 
     }
+
+    public function copyNews(string $id)
+    {
+        $news = News::findOrFail($id);
+        $copyNews = $news->replicate();
+        $copyNews->save();
+        toast(__('Copied Successfully'), 'success');
+        return redirect()->back();
+    }
 }
