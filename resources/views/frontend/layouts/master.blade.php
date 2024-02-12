@@ -28,6 +28,33 @@
 
     <script type="text/javascript" src="{{asset('frontend/assets/js/index.bundle.js')}}"></script>
 
+    <script>
+        $(document).ready(function(){
+            $('#site-language').on('change', function(){
+                let languageCode = $(this).val();
+                $.ajax({
+                    method: 'GET',
+                    url: "{{route('language')}}",
+                    data: {languageCode: languageCode},
+                    success: function(data)
+                    {
+                        if(data.status === 'success')
+                        {
+                            // window.location.reload();
+                            window.location.href = "{{ url('/') }}";
+                        }
+                    },
+                    error: function(data)
+                    {
+                        console.log(data);
+                    }
+                })
+            })
+        })
+
+
+    </script>
+
 </body>
 
 </html>

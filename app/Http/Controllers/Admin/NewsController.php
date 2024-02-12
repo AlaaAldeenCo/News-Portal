@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminNewsCreateRequest;
+use App\Http\Requests\AdminNewsUpdateRequest;
 use App\Models\Category;
 use App\Models\Language;
 use App\Models\News;
@@ -94,7 +95,7 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AdminNewsUpdateRequest $request, string $id)
     {
         $news = News::findOrFail($id);
         $imagePath = $this->handleFileUpload($request, 'image');
@@ -181,5 +182,11 @@ class NewsController extends Controller
         $copyNews->save();
         toast(__('Copied Successfully'), 'success');
         return redirect()->back();
+    }
+
+    public function pendingNews()
+    {
+        $languages = Language::all();
+        return view('admin.pending-news.index', compact('languages'));
     }
 }

@@ -22,6 +22,7 @@
                     <span>News</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{route('admin.news.index')}}">All News</a></li>
+                    <li><a class="nav-link" href="{{route('admin.pending.news')}}">All Pending News</a></li>
                 </ul>
 
             <li><a class="nav-link" href="{{route('admin.language.index')}}"><i class="far fa-square"></i> <span>Language</span></a></li>
