@@ -11,8 +11,9 @@ class HomeController extends Controller
     public function index()
     {
         // breakingNews = News::where(['is_breaking_news' => 1])
-        $breakingNews = News::where(['status' => 1, 'is_approved' => 1, 'is_breaking_news' => 1])->get();
-       
+        $breakingNews = News::where(['is_breaking_news' => 1])->ActiveEntries()->withLocalize()
+        ->orderBy('id','DESC')->take(10)->get();
+
         return view('frontend.home', compact('breakingNews'));
     }
 }
