@@ -33,3 +33,6 @@ require __DIR__.'/auth.php';
 /* Language Route */
 Route::get('language', LanguageController::class)->name('language');
 
+/* News Details page */
+Route::get('news-details/{slug}', [HomeController::class, 'showNews'])->name('news-details');
+
