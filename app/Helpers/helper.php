@@ -38,8 +38,26 @@ function setLanguage(string $code)
 {
     session(['language' => $code]);
 }
+
 /* Truncate The Text */
 function truncate(string $text, int $limit = 45)
 {
     return \Str::limit($text, $limit, '....');
+}
+
+/* Add K Format For View Number */
+function convertToKFormat(int $number)
+{
+    if($number < 1000)
+    {
+        return $number;
+    }
+    elseif($number < 1000000)
+    {
+        return round($number/1000, 1).'K';
+    }
+    else
+    {
+        return round($number/1000000, 1).'M';
+    }
 }

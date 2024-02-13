@@ -20,7 +20,31 @@ class HomeController extends Controller
     /* Show News Details */
     public function showNews($slug)
     {
-        $news = News::with(['auther', 'category'])->where('slug', $slug)->ActiveEntries()->withLocalize()->first();
-        return view('frontend.news-details', compact('news'));
+        $news = News::with(['auther', 'category', 'tags'])->where('slug', $slug)->ActiveEntries()->withLocalize()->first();
+        $recentNews = News::with(['auther', 'category'])->where('slug', '!=', $news->slug)->ActiveEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
+        $this->countView($news);
+        return view('frontend.news-details', compact('news', 'recentNews'));
+    }
+
+    /* Count News View */
+    public function countView($news)
+    {
+        if(session()->has('viewed_news'))
+        {
+            $newsIds = session('viewed_news');
+            if(!in_array($news->id, $newsIds))
+            {
+                $newsIds[] = $news->id;
+                $news->increment('views');
+            }
+            session(['viewed_news' => $newsIds]);
+        }
+        else
+        {
+            session(['viewed_news' => [$news->id]]);
+        }
+
+
+
     }
 }
