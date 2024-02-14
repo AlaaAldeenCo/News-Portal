@@ -138,11 +138,11 @@
                 <div class="wrap__profile">
                     <div class="wrap__profile-author">
                         <figure>
-                            <img src="images/news1.jpg" alt="" class="img-fluid rounded-circle">
+                            <img style="width: 200px;height: 200px;object-fit: cover;" src="{{asset($news->auther->image)}}"  alt="" class="img-fluid rounded-circle">
                         </figure>
                         <div class="wrap__profile-author-detail">
-                            <div class="wrap__profile-author-detail-name">author</div>
-                            <h4>jhon doe</h4>
+                            <div class="wrap__profile-author-detail-name">{{__('author')}}</div>
+                            <h4>{{$news->auther->name}}</h4>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis laboriosam ad
                                 beatae itaque ea non
                                 placeat officia ipsum praesentium! Ullam?</p>
@@ -251,7 +251,7 @@
                             </ol>
                         </li>
 
-                        <li class="comment">
+                        {{-- <li class="comment">
                             <aside class="comment-body">
                                 <div class="comment-meta">
                                     <div class="comment-author vcard">
@@ -282,13 +282,14 @@
                                     </span>
                                 </div>
                             </aside>
-                        </li>
+                        </li> --}}
                     </ol>
 
                     <div class="comment-respond">
                         <h3 class="comment-reply-title">Leave a Reply</h3>
 
-                        <form class="comment-form">
+                        <form action="{{route('news-comment')}}" class="comment-form" method="POST">
+                            @csrf
                             <p class="comment-notes">
                                 <span id="email-notes">Your email address will not be published.</span>
                                 Required fields are marked
@@ -298,26 +299,12 @@
                                 <label for="comment">Comment</label>
                                 <textarea name="comment" id="comment" cols="45" rows="5" maxlength="65525"
                                     required="required"></textarea>
+
+                                    @error('comment')
+                                        <p class="text-danger">{{$message}}</p>
+                                    @enderror
                             </p>
-                            <p class="comment-form-author">
-                                <label>Name <span class="required">*</span></label>
-                                <input type="text" id="author" name="name" required="required">
-                            </p>
-                            <p class="comment-form-email">
-                                <label for="email">Email <span class="required">*</span></label>
-                                <input type="email" id="email" name="email" required="required">
-                            </p>
-                            <p class="comment-form-url">
-                                <label for="url">Website</label>
-                                <input type="url" id="url" name="url">
-                            </p>
-                            <p class="comment-form-cookies-consent">
-                                <input type="checkbox" value="yes" name="wp-comment-cookies-consent"
-                                    id="wp-comment-cookies-consent">
-                                <label for="wp-comment-cookies-consent">Save my name, email, and website in this
-                                    browser for the next
-                                    span I comment.</label>
-                            </p>
+
                             <p class="form-submit mb-0">
                                 <input type="submit" name="submit" id="submit" class="submit" value="Post Comment">
                             </p>

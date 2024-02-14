@@ -54,4 +54,12 @@ class HomeController extends Controller
         return Tag::select('name', DB::raw('COUNT(*) as count'))->where('language', getLanguage())
         ->groupBy('name')->orderByDesc('count')->take(10)->get();
     }
+
+    /* Handle Comment */
+    public function handleComment(Request $request)
+    {
+        $request->validate([
+            'comment' => ['required', 'string', 'max:1000']
+        ]);
+    }
 }
