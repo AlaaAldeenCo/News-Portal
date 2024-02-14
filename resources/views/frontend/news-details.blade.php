@@ -178,31 +178,31 @@
                 </div>
                 <!-- end author-->
 
-                <!-- Comment  -->
+                @auth
                 <div id="comments" class="comments-area">
                     <h3 class="comments-title">2 Comments:</h3>
 
                     <ol class="comment-list">
+                        @foreach ($news->comments()->whereNull('parent_id')->get() as $comment)
                         <li class="comment">
                             <aside class="comment-body">
                                 <div class="comment-meta">
                                     <div class="comment-author vcard">
-                                        <img src="images/news2.jpg" class="avatar" alt="image">
-                                        <b class="fn">Sinmun</b>
-                                        <span class="says">says:</span>
+                                        <img src="{{asset('frontend/assets/images/avatar.png')}}" class="avatar" alt="image">
+                                        <b class="fn">{{$comment->user->name}}</b>
+                                        <span class="says">{{__('says')}}:</span>
                                     </div>
 
                                     <div class="comment-metadata">
-                                        <a href="#">
-                                            <span>April 24, 2019 at 10:59 am</span>
+                                        <a href="javascript:;">
+                                            <span>{{date('M, d, Y H:i', strtotime($comment->created_at))}}</span>
                                         </a>
                                     </div>
                                 </div>
 
                                 <div class="comment-content">
-                                    <p>Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s,
-                                        when an unknown
-                                        printer took a galley of type and scrambled it to make a type specimen book.
+                                    <p>
+                                        {{$comment->comment}}
                                     </p>
                                 </div>
 
@@ -250,6 +250,8 @@
                                 </li>
                             </ol>
                         </li>
+                        @endforeach
+
 
                         {{-- <li class="comment">
                             <aside class="comment-body">
@@ -299,6 +301,8 @@
                                 <label for="comment">Comment</label>
                                 <textarea name="comment" id="comment" cols="45" rows="5" maxlength="65525"
                                     required="required"></textarea>
+                                <input type="hidden" name="news_id" value="{{$news->id}}">
+                                <input type="hidden" name="parent_id" value="">
 
                                     @error('comment')
                                         <p class="text-danger">{{$message}}</p>
@@ -311,6 +315,15 @@
                         </form>
                     </div>
                 </div>
+                @else
+                <div class="card my-5">
+                    <div class="card-body">
+                        <h5 class="p-0">{{ __('Please') }} <a href="{{ route('login') }}">{{ __('Login') }}</a> {{ __('to comment in the post!') }}</h5>
+                    </div>
+                </div>
+                @endauth
+                <!-- Comment  -->
+
                 <!-- Modal -->
                 <div class="comment_modal">
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
