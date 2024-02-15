@@ -1,4 +1,12 @@
 @extends('frontend.layouts.master')
+@section('title', $news->title)
+@section('meta_description', $news->meta_description)
+@section('meta_og_title', $news->meta_title)
+@section('meta_og_description', $news->meta_description)
+@section('meta_og_image', asset($news->image))
+@section('meta_tw_title', $news->meta_title)
+@section('meta_tw_description', $news->meta_description)
+@section('meta_tw_image', asset($news->image))
 @section('content')
     <section class="pb-80">
         <div class="container">
