@@ -29,8 +29,10 @@ class HomeController extends Controller
         $mostCommonTags = $this->mostCommonTags();
         $nextNews = News::where('id', '>', $news->id)->ActiveEntries()->withLocalize()->orderBy('id', 'asc')->first();
         $previousNews = News::where('id', '<', $news->id)->ActiveEntries()->withLocalize()->orderBy('id', 'desc')->first();
+        $relatedNews = News::where('slug', '!=', $news->slug)->where('category_id' , $news->category_id)
+        ->ActiveEntries()->withLocalize()->take(5)->get();
         $this->countView($news);
-        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews'));
+        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews', 'relatedNews'));
     }
 
     /* Count News View */
