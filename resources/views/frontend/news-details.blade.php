@@ -212,14 +212,14 @@
                                             <div class="reply">
                                                 <a href="#" class="comment-reply-link" data-toggle="modal"
                                                     data-target="#exampleModal-{{ $comment->id }}">Reply</a>
-                                                <span>
+                                                <span class="delete-msg" data-id= "{{ $comment->id }}">
                                                     <i class="fa fa-trash"></i>
                                                 </span>
                                             </div>
                                         </aside>
 
-                                        @if ($comment->replay()->count() > 0)
-                                            @foreach ($comment->replay as $replay)
+                                        @if ($comment->reply()->count() > 0)
+                                            @foreach ($comment->reply as $reply)
                                                 <ol class="children">
                                                     <li class="comment">
                                                         <aside class="comment-body">
@@ -227,29 +227,36 @@
                                                                 <div class="comment-author vcard">
                                                                     <img src="{{ asset('frontend/assets/images/avatar.png') }}"
                                                                         class="avatar" alt="image">
-                                                                    <b class="fn">{{ $replay->user->name }}</b>
+                                                                    <b class="fn">{{ $reply->user->name }}</b>
                                                                     <span class="says">{{ __('says') }}:</span>
                                                                 </div>
 
                                                                 <div class="comment-metadata">
                                                                     <a href="#">
-                                                                        <span>{{ date('M, d, Y H:i', strtotime($replay->created_at)) }}</span>
+                                                                        <span>{{ date('M, d, Y H:i', strtotime($reply->created_at)) }}</span>
                                                                     </a>
                                                                 </div>
                                                             </div>
 
                                                             <div class="comment-content">
-                                                                <p>{{ $replay->comment }}</p>
+                                                                <p>{{ $reply->comment }}</p>
                                                             </div>
 
                                                             <div class="reply">
+                                                                @if ($loop->last)
                                                                 <a href="#" class="comment-reply-link"
                                                                     data-toggle="modal"
                                                                     data-target="#exampleModal-{{ $comment->id }}">Reply</a>
-                                                                <span>
+                                                                @endif
+                                                                <span class="delete-msg" style="margin-left: auto;" data-id= "{{ $reply->id }}">
                                                                     <i class="fa fa-trash"></i>
                                                                 </span>
                                                             </div>
+
+
+
+
+
                                                         </aside>
                                                     </li>
                                                 </ol>
@@ -289,39 +296,6 @@
                                     </div>
                                 @endforeach
 
-
-                                {{-- <li class="comment">
-                            <aside class="comment-body">
-                                <div class="comment-meta">
-                                    <div class="comment-author vcard">
-                                        <img src="images/news4.jpg" class="avatar" alt="image">
-                                        <b class="fn">Sinmun</b>
-                                        <span class="says">says:</span>
-                                    </div>
-
-                                    <div class="comment-metadata">
-                                        <a href="#">
-                                            <span>April 24, 2019 at 10:59 am</span>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="comment-content">
-                                    <p>Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s,
-                                        when an unknown
-                                        printer took a galley of type and scrambled it to make a type specimen book.
-                                    </p>
-                                </div>
-
-                                <div class="reply">
-                                    <a href="#" class="comment-reply-link" data-toggle="modal"
-                                        data-target="#exampleModal">Reply</a>
-                                    <span>
-                                        <i class="fa fa-trash"></i>
-                                    </span>
-                                </div>
-                            </aside>
-                        </li> --}}
                             </ol>
 
                             <div class="comment-respond">
@@ -372,18 +346,24 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="single_navigation-prev">
-                                <a href="#">
-                                    <span>previous post</span>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem, similique.
+                                @if ($previousNews)
+                                <a href="{{route('news-details', $previousNews->slug)}}">
+                                    <span>{{__('previous post')}}</span>
+                                    {!! truncate($previousNews->title) !!}
                                 </a>
+                                @endif
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="single_navigation-next text-left text-md-right">
-                                <a href="#">
-                                    <span>next post</span>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis, nesciunt.
+                                @if ($nextNews)
+                                <a href="{{route('news-details', $nextNews->slug)}}">
+                                    <span>{{__('next post')}}</span>
+                                    {!! truncate($nextNews->title) !!}
                                 </a>
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -772,3 +752,54 @@
         </div>
     </section>
 @endsection
+
+@push('content')
+<script>
+    $(document).ready(function(){
+        $('.delete-msg').on('click', function(e) {
+                e.preventDefault();
+                let id = $(this).data('id');
+                Swal.fire({
+                    title: '{{ __("Are you sure?") }}',
+                    text: "{{ __("You won'\t be able to revert this!") }}",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '{{ __("Yes, delete it!") }}'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            method: 'DELETE',
+                            url: "{{ route('news-comment-destroy') }}",
+                            data:{id:id},
+                            success: function(data) {
+                                if (data.status === 'success') {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        data.message,
+                                        'success'
+                                    )
+                                    window.location.reload();
+                                } else if (data.status === 'error') {
+                                    Swal.fire(
+                                        'Error!',
+                                        data.message,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+
+
+                    }
+                })
+            })
+
+    })
+</script>
+@endpush

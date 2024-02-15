@@ -27,8 +27,10 @@ class HomeController extends Controller
         $news = News::with(['auther', 'category', 'tags', 'comments'])->where('slug', $slug)->ActiveEntries()->withLocalize()->first();
         $recentNews = News::with(['auther', 'category'])->where('slug', '!=', $news->slug)->ActiveEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
         $mostCommonTags = $this->mostCommonTags();
+        $nextNews = News::where('id', '>', $news->id)->ActiveEntries()->withLocalize()->orderBy('id', 'asc')->first();
+        $previousNews = News::where('id', '<', $news->id)->ActiveEntries()->withLocalize()->orderBy('id', 'desc')->first();
         $this->countView($news);
-        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags'));
+        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews'));
     }
 
     /* Count News View */
@@ -83,5 +85,16 @@ class HomeController extends Controller
         $comment->comment = $request->replay;
         $comment->save();
         return redirect()->back();
+    }
+
+    public function commentDestory(Request $request)
+    {
+        $comment = Comment::findOrFail($request->id);
+        if(Auth::user()->id == $comment->user_id)
+        {
+            $comment->delete();
+            return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
+        }
+        return response(['status' => 'error', 'message' => __('Someting went wrong')]);
     }
 }
