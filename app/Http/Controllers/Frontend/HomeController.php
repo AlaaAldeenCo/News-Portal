@@ -16,7 +16,7 @@ class HomeController extends Controller
     {
 
         $breakingNews = News::where(['is_breaking_news' => 1])->ActiveEntries()->withLocalize()
-        ->orderBy('id','DESC')->take(10)->get();
+            ->orderBy('id', 'DESC')->take(10)->get();
 
         return view('frontend.home', compact('breakingNews'));
     }
@@ -34,18 +34,14 @@ class HomeController extends Controller
     /* Count News View */
     public function countView($news)
     {
-        if(session()->has('viewed_news'))
-        {
+        if (session()->has('viewed_news')) {
             $newsIds = session('viewed_news');
-            if(!in_array($news->id, $newsIds))
-            {
+            if (!in_array($news->id, $newsIds)) {
                 $newsIds[] = $news->id;
                 $news->increment('views');
             }
             session(['viewed_news' => $newsIds]);
-        }
-        else
-        {
+        } else {
             session(['viewed_news' => [$news->id]]);
         }
     }
@@ -54,7 +50,7 @@ class HomeController extends Controller
     public function mostCommonTags()
     {
         return Tag::select('name', DB::raw('COUNT(*) as count'))->where('language', getLanguage())
-        ->groupBy('name')->orderByDesc('count')->take(10)->get();
+            ->groupBy('name')->orderByDesc('count')->take(10)->get();
     }
 
     /* Handle Comment */
@@ -69,6 +65,22 @@ class HomeController extends Controller
         $comment->user_id = Auth::user()->id;
         $comment->parent_id = $request->parent_id;
         $comment->comment = $request->comment;
+        $comment->save();
+        return redirect()->back();
+    }
+
+    /* Handle Replay On A Comment */
+    public function handleReplay(Request $request)
+    {
+        $request->validate([
+            'replay' => ['required', 'string', 'max:1000']
+        ]);
+
+        $comment = new Comment();
+        $comment->news_id = $request->news_id;
+        $comment->user_id = Auth::user()->id;
+        $comment->parent_id = $request->parent_id;
+        $comment->comment = $request->replay;
         $comment->save();
         return redirect()->back();
     }

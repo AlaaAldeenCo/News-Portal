@@ -38,3 +38,6 @@ Route::get('news-details/{slug}', [HomeController::class, 'showNews'])->name('ne
 
 /* Comments Route */
 Route::post('news-comment',[HomeController::class, 'handleComment'])->name('news-comment');
+/* Comment Replay Route */
+Route::post('news-comment-replay',[HomeController::class, 'handleReplay'])->name('news-comment-replay');
+
