@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAuthenticationController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HomeSectionSettingController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -42,4 +43,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     Route::get('news-copy/{id}', [NewsController::class, 'copyNews'])->name('news-copy');
     Route::get('pending-news', [NewsController::class, 'pendingNews'])->name('pending.news');
     Route::resource('news', NewsController::class);
+
+    /* Home Section Setting Routes */
+    Route::get('home-section-setting', [HomeSectionSettingController::class, 'index'])->name('home-section-setting');
 });
