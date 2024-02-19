@@ -29,8 +29,7 @@
                                 ->orderByDesc('id')
                                 ->get();
 
-                            $homeSectionSetting = \App\Models\HomeSectionSetting::where('language',$language->lange)->first();
-
+                            $homeSectionSetting = \App\Models\HomeSectionSetting::where('language', $language->lang)->first();
 
                         @endphp
                         <div class="tab-pane fade show {{ $loop->index === 0 ? 'active' : '' }}"

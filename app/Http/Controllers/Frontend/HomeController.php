@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\HomeSectionSetting;
 use App\Models\News;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -15,42 +16,65 @@ class HomeController extends Controller
     public function index()
     {
 
-        $breakingNews = News::where(['is_breaking_news' => 1])->ActiveEntries()->withLocalize()
+        $breakingNews = News::where(['is_breaking_news' => 1])->activeEntries()->withLocalize()
         ->orderBy('updated_at', 'DESC')->take(10)->get();
 
-        $heroSlider = News::with(['category', 'auther'])->where(['show_at_slider' => 1])->ActiveEntries()->withLocalize()
+        $heroSlider = News::with(['category', 'auther'])->where(['show_at_slider' => 1])->activeEntries()->withLocalize()
         ->orderBy('updated_at', 'DESC')->take(6)->get();
 
         $recentNews = News::with(['category', 'auther'])->activeEntries()->withLocalize()
         ->orderBy('updated_at', 'DESC')->take(6)->get();
 
-        $popularNews = News::with(['category'])->where(['show_at_popular' => 1])->ActiveEntries()->withLocalize()
+        $popularNews = News::with(['category'])->where(['show_at_popular' => 1])->activeEntries()->withLocalize()
         ->orderBy('updated_at', 'DESC')->take(4)->get();
 
-        return view('frontend.home', compact('breakingNews', 'heroSlider', 'recentNews', 'popularNews'));
+        $HomeSectionSetting = HomeSectionSetting::where(['language' => getLanguage()])->first();
+
+        $categorySectionOne = News::where('category_id', $HomeSectionSetting->category_section_one)
+            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
+
+        $categorySectionTwo = News::where('category_id', $HomeSectionSetting->category_section_two)
+            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
+
+        $categorySectionThree = News::where('category_id', $HomeSectionSetting->category_section_three)
+            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
+
+        $categorySectionFour = News::where('category_id', $HomeSectionSetting->category_section_four)
+            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
+
+        $mostViewedPosts = News::activeEntries()->withLocalize()->orderBy('views', 'DESC')->take(3)->get();
+
+        return view('frontend.home', compact('breakingNews', 'heroSlider', 'recentNews', 'popularNews',
+            'categorySectionOne',
+            'categorySectionTwo',
+            'categorySectionThree',
+            'categorySectionFour',
+            'mostViewedPosts'
+    ));
     }
 
     /* Show News Details */
     public function showNews($slug)
     {
         $news = News::with(['auther', 'category', 'tags', 'comments'])->where('slug', $slug)
-        ->ActiveEntries()->withLocalize()->first();
+        ->activeEntries()->withLocalize()->first();
+        $this->countView($news);
 
         $recentNews = News::with(['auther', 'category'])->where('slug', '!=', $news->slug)
-        ->ActiveEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
+        ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
 
         $mostCommonTags = $this->mostCommonTags();
 
-        $nextNews = News::where('id', '>', $news->id)->ActiveEntries()
+        $nextNews = News::where('id', '>', $news->id)->activeEntries()
         ->withLocalize()->orderBy('id', 'asc')->first();
 
-        $previousNews = News::where('id', '<', $news->id)->ActiveEntries()
+        $previousNews = News::where('id', '<', $news->id)->activeEntries()
         ->withLocalize()->orderBy('id', 'desc')->first();
 
         $relatedNews = News::where('slug', '!=', $news->slug)->where('category_id' , $news->category_id)
-        ->ActiveEntries()->withLocalize()->take(5)->get();
+        ->activeEntries()->withLocalize()->take(5)->get();
 
-        $this->countView($news);
+
 
         return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews', 'relatedNews'));
     }
@@ -65,8 +89,11 @@ class HomeController extends Controller
                 $news->increment('views');
             }
             session(['viewed_news' => $newsIds]);
-        } else {
+        } else
+        {
             session(['viewed_news' => [$news->id]]);
+
+            $news->increment('views');
         }
     }
 
