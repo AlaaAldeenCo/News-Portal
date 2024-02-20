@@ -69,28 +69,20 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Pick Your Color</label>
+                        <label>{{__('Pick Your Color')}}</label>
                         <div class="input-group colorpickerinput">
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="color">
                           <div class="input-group-append">
                             <div class="input-group-text">
                               <i class="fas fa-fill-drip"></i>
                             </div>
                           </div>
                         </div>
-                      </div>
-
-
-                    <div class="form-group">
-                        <label for="">{{ __('Fan Count') }} </label>
-                        <select name="show_at_nav" id="" class="form-control">
-                            <option value="0">{{ __('No') }}</option>
-                            <option value="1">{{ __('Yes') }}</option>
-                        </select>
-                        @error('defalut')
+                        @error('color')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
-                    </div>
+                      </div>
+                      
                     <div class="form-group">
                         <label for="">{{ __('Status') }}</label>
                         <select name="status" id="" class="form-control">
