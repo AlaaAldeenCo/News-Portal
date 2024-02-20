@@ -379,7 +379,7 @@
                     </div>
 
                     <aside class="wrapper__list__article mt-5">
-                        <h4 class="border_section">{{$categorySectionFour->first()->category->name}}</h4>
+                        <h4 class="border_section">{{@$categorySectionFour->first()->category->name}}</h4>
 
                         <div class="wrapp__list__article-responsive">
                             @foreach($categorySectionFour as $sectionFourNews)
@@ -568,50 +568,26 @@
                             <h4 class="border_section">stay conected</h4>
                             <!-- widget Social media -->
                             <div class="wrap__social__media">
-                                <a href="#" target="_blank">
-                                    <div class="social__media__widget facebook">
+                                @foreach ($socialCounts as $socialCount )
+                                <a href="{{ $socialCount->url }}" target="_blank">
+                                    <div class="social__media__widget mt-2" style="background-color:{{ $socialCount->color }}">
                                         <span class="social__media__widget-icon">
-                                            <i class="fa fa-facebook"></i>
+                                            <i class="{{ $socialCount->icon }}"></i>
                                         </span>
                                         <span class="social__media__widget-counter">
-                                            19,243 fans
+                                            {{ $socialCount->fan_count }} {{ $socialCount->fan_type }}
                                         </span>
                                         <span class="social__media__widget-name">
-                                            like
+                                            {{ $socialCount->button_text }}
                                         </span>
                                     </div>
                                 </a>
-                                <a href="#" target="_blank">
-                                    <div class="social__media__widget twitter">
-                                        <span class="social__media__widget-icon">
-                                            <i class="fa fa-twitter"></i>
-                                        </span>
-                                        <span class="social__media__widget-counter">
-                                            2.076 followers
-                                        </span>
-                                        <span class="social__media__widget-name">
-                                            follow
-                                        </span>
-                                    </div>
-                                </a>
-                                <a href="#" target="_blank">
-                                    <div class="social__media__widget youtube">
-                                        <span class="social__media__widget-icon">
-                                            <i class="fa fa-youtube"></i>
-                                        </span>
-                                        <span class="social__media__widget-counter">
-                                            15,200 followers
-                                        </span>
-                                        <span class="social__media__widget-name">
-                                            subscribe
-                                        </span>
-                                    </div>
-                                </a>
+                                @endforeach
 
                             </div>
                         </aside>
 
-                        <aside class="wrapper__list__article">
+                        {{-- <aside class="wrapper__list__article">
                             <h4 class="border_section">tags</h4>
                             <div class="blog-tags p-0">
                                 <ul class="list-inline">
@@ -691,6 +667,23 @@
                                             #framework
                                         </a>
                                     </li>
+
+                                </ul>
+                            </div>
+                        </aside> --}}
+
+                        <aside class="wrapper__list__article">
+                            <h4 class="border_section">tags</h4>
+                            <div class="blog-tags p-0">
+                                <ul class="list-inline">
+
+                                    @foreach ($mostCommonTags as $tag)
+                                        <li class="list-inline-item">
+                                            <a href="#">
+                                                #{{ $tag->name }} ({{ $tag->count }})
+                                            </a>
+                                        </li>
+                                    @endforeach
 
                                 </ul>
                             </div>

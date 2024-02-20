@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\HomeSectionSetting;
 use App\Models\News;
+use App\Models\SocialCount;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,26 +31,43 @@ class HomeController extends Controller
 
         $HomeSectionSetting = HomeSectionSetting::where(['language' => getLanguage()])->first();
 
-        $categorySectionOne = News::where('category_id', $HomeSectionSetting->category_section_one)
-            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
+        if($HomeSectionSetting )
+        {
+            $categorySectionOne = News::where('category_id', $HomeSectionSetting->category_section_one)
+                ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
 
-        $categorySectionTwo = News::where('category_id', $HomeSectionSetting->category_section_two)
-            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
+            $categorySectionTwo = News::where('category_id', $HomeSectionSetting->category_section_two)
+                ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
 
-        $categorySectionThree = News::where('category_id', $HomeSectionSetting->category_section_three)
-            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
+            $categorySectionThree = News::where('category_id', $HomeSectionSetting->category_section_three)
+                ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
 
-        $categorySectionFour = News::where('category_id', $HomeSectionSetting->category_section_four)
-            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
+            $categorySectionFour = News::where('category_id', $HomeSectionSetting->category_section_four)
+                ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
+        }
+
+        else
+        {
+            $categorySectionOne = collect();
+            $categorySectionTwo = collect();
+            $categorySectionThree = collect();
+            $categorySectionFour = collect();
+        }
 
         $mostViewedPosts = News::activeEntries()->withLocalize()->orderBy('views', 'DESC')->take(3)->get();
+
+        $socialCounts = SocialCount::where(['status' => 1, 'language' => getLanguage()])->get();
+
+        $mostCommonTags = $this->mostCommonTags();
 
         return view('frontend.home', compact('breakingNews', 'heroSlider', 'recentNews', 'popularNews',
             'categorySectionOne',
             'categorySectionTwo',
             'categorySectionThree',
             'categorySectionFour',
-            'mostViewedPosts'
+            'mostViewedPosts',
+            'socialCounts',
+            'mostCommonTags'
     ));
     }
 
@@ -147,5 +165,23 @@ class HomeController extends Controller
             return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
         }
         return response(['status' => 'error', 'message' => __('Someting went wrong')]);
+    }
+
+    /* Show The News Depending on Searching */
+    public function news(Request $request)
+    {
+        if($request->has('search'))
+        {
+            $news = News::where(function($query) use ($request)
+            {
+                $query->where('title', 'like', '%'.$request->search.'%')
+                ->orWhere('content', 'like', '%'.$request->search.'%');
+            })
+            ->orWhereHas('category', function($query) use ($request)
+            {
+                $query->where('name', 'like', '%'.$request->search.'%');
+            })->activeEntries()->withLocalize()->get();
+        }
+        return view('frontend.news', compact('news'));
     }
 }
