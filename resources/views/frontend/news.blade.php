@@ -9,14 +9,11 @@
                     <!-- Breadcrumb -->
                     <ul class="breadcrumbs bg-light mb-4">
                         <li class="breadcrumbs__item">
-                            <a href="index.html" class="breadcrumbs__url">
-                                <i class="fa fa-home"></i> Home</a>
+                            <a href="{{route('home')}}" class="breadcrumbs__url">
+                                <i class="fa fa-home"></i> {{__('Home')}}</a>
                         </li>
                         <li class="breadcrumbs__item">
-                            <a href="index.html" class="breadcrumbs__url">News</a>
-                        </li>
-                        <li class="breadcrumbs__item breadcrumbs__item--current">
-                            World
+                            <a href="javascript:;" class="breadcrumbs__url">{{__('News')}}</a>
                         </li>
                     </ul>
                 </div>
@@ -44,7 +41,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <button type="submit">search</button>
+                                    <button type="submit">{{__('search')}}</button>
                                 </div>
                             </div>
                         </form>
@@ -215,7 +212,7 @@
                                 <ul class="list-inline">
                                     @foreach ($mostCommonTags as $tag)
                                     <li class="list-inline-item">
-                                        <a href="#">
+                                        <a href="{{route('news', ['tag' => $tag->name])}}">
                                             #{{ $tag->name }} ({{ $tag->count }})
                                         </a>
                                     </li>

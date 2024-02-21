@@ -523,49 +523,12 @@
                                 @endforeach
 
 
-                                {{-- <div class="mb-3">
-                                    <!-- Post Article -->
-                                    <div class="card__post card__post-list">
-                                        <div class="image-sm">
-                                            <a href="blog_details.html">
-                                                <img src="images/news2.jpg" class="img-fluid" alt="">
-                                            </a>
-                                        </div>
-
-                                        <div class="card__post__body ">
-                                            <div class="card__post__content">
-
-                                                <div class="card__post__author-info mb-2">
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item">
-                                                            <span class="text-primary">
-                                                                by david hall
-                                                            </span>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <span class="text-dark text-capitalize">
-                                                                descember 09, 2016
-                                                            </span>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                                <div class="card__post__title">
-                                                    <h6>
-                                                        <a href="blog_details.html">
-                                                            6 Best Tips for Building a Good Shipping Boat
-                                                        </a>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                
                             </div>
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">stay conected</h4>
+                            <h4 class="border_section">{{__('stay conected')}}</h4>
                             <!-- widget Social media -->
                             <div class="wrap__social__media">
                                 @foreach ($socialCounts as $socialCount )
@@ -673,13 +636,13 @@
                         </aside> --}}
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">tags</h4>
+                            <h4 class="border_section">{{__('tags')}}</h4>
                             <div class="blog-tags p-0">
                                 <ul class="list-inline">
 
                                     @foreach ($mostCommonTags as $tag)
                                         <li class="list-inline-item">
-                                            <a href="#">
+                                            <a href="{{route('news', ['tag' => $tag->name])}}">
                                                 #{{ $tag->name }} ({{ $tag->count }})
                                             </a>
                                         </li>

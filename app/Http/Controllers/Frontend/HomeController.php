@@ -19,21 +19,20 @@ class HomeController extends Controller
     {
 
         $breakingNews = News::where(['is_breaking_news' => 1])->activeEntries()->withLocalize()
-        ->orderBy('updated_at', 'DESC')->take(10)->get();
+            ->orderBy('updated_at', 'DESC')->take(10)->get();
 
         $heroSlider = News::with(['category', 'auther'])->where(['show_at_slider' => 1])->activeEntries()->withLocalize()
-        ->orderBy('updated_at', 'DESC')->take(6)->get();
+            ->orderBy('updated_at', 'DESC')->take(6)->get();
 
         $recentNews = News::with(['category', 'auther'])->activeEntries()->withLocalize()
-        ->orderBy('updated_at', 'DESC')->take(6)->get();
+            ->orderBy('updated_at', 'DESC')->take(6)->get();
 
         $popularNews = News::with(['category'])->where(['show_at_popular' => 1])->activeEntries()->withLocalize()
-        ->orderBy('updated_at', 'DESC')->take(4)->get();
+            ->orderBy('updated_at', 'DESC')->take(4)->get();
 
         $HomeSectionSetting = HomeSectionSetting::where(['language' => getLanguage()])->first();
 
-        if($HomeSectionSetting )
-        {
+        if ($HomeSectionSetting) {
             $categorySectionOne = News::where('category_id', $HomeSectionSetting->category_section_one)
                 ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
 
@@ -45,10 +44,7 @@ class HomeController extends Controller
 
             $categorySectionFour = News::where('category_id', $HomeSectionSetting->category_section_four)
                 ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
-        }
-
-        else
-        {
+        } else {
             $categorySectionOne = collect();
             $categorySectionTwo = collect();
             $categorySectionThree = collect();
@@ -61,7 +57,11 @@ class HomeController extends Controller
 
         $mostCommonTags = $this->mostCommonTags();
 
-        return view('frontend.home', compact('breakingNews', 'heroSlider', 'recentNews', 'popularNews',
+        return view('frontend.home', compact(
+            'breakingNews',
+            'heroSlider',
+            'recentNews',
+            'popularNews',
             'categorySectionOne',
             'categorySectionTwo',
             'categorySectionThree',
@@ -69,33 +69,35 @@ class HomeController extends Controller
             'mostViewedPosts',
             'socialCounts',
             'mostCommonTags'
-    ));
+        ));
     }
 
     /* Show News Details */
     public function showNews($slug)
     {
         $news = News::with(['auther', 'category', 'tags', 'comments'])->where('slug', $slug)
-        ->activeEntries()->withLocalize()->first();
+            ->activeEntries()->withLocalize()->first();
         $this->countView($news);
 
         $recentNews = News::with(['auther', 'category'])->where('slug', '!=', $news->slug)
-        ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
+            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
 
         $mostCommonTags = $this->mostCommonTags();
 
         $nextNews = News::where('id', '>', $news->id)->activeEntries()
-        ->withLocalize()->orderBy('id', 'asc')->first();
+            ->withLocalize()->orderBy('id', 'asc')->first();
 
         $previousNews = News::where('id', '<', $news->id)->activeEntries()
-        ->withLocalize()->orderBy('id', 'desc')->first();
+            ->withLocalize()->orderBy('id', 'desc')->first();
 
-        $relatedNews = News::where('slug', '!=', $news->slug)->where('category_id' , $news->category_id)
-        ->activeEntries()->withLocalize()->take(5)->get();
+        $relatedNews = News::where('slug', '!=', $news->slug)->where('category_id', $news->category_id)
+            ->activeEntries()->withLocalize()->take(5)->get();
+
+        $socialCounts = SocialCount::where(['status' => 1, 'language' => getLanguage()])->get();
 
 
 
-        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews', 'relatedNews'));
+        return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextNews', 'previousNews', 'relatedNews', 'socialCounts'));
     }
 
     /* Count News View */
@@ -108,8 +110,7 @@ class HomeController extends Controller
                 $news->increment('views');
             }
             session(['viewed_news' => $newsIds]);
-        } else
-        {
+        } else {
             session(['viewed_news' => [$news->id]]);
 
             $news->increment('views');
@@ -160,8 +161,7 @@ class HomeController extends Controller
     public function commentDestory(Request $request)
     {
         $comment = Comment::findOrFail($request->id);
-        if(Auth::user()->id == $comment->user_id)
-        {
+        if (Auth::user()->id == $comment->user_id) {
             $comment->delete();
             return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
         }
@@ -171,68 +171,40 @@ class HomeController extends Controller
     /* Show The News Depending on Searching */
     public function news(Request $request)
     {
-        // if($request->has('search'))
-        // {
-        //     $news = News::where(function($query) use ($request)
-        //     {
-        //         $query->where('title', 'like', '%'.$request->search.'%')
-        //         ->orWhere('content', 'like', '%'.$request->search.'%');
-        //     })
-        //     ->orWhereHas('category', function($query) use ($request)
-        //     {
-        //         $query->where('name', 'like', '%'.$request->search.'%');
-        //     })->activeEntries()->withLocalize()->paginate(10);
-        // }
-
         $news = News::query();
 
-        // $news->when($request->has('category') && !empty($request->category), function($query) use ($request){
-        //     $query->whereHAs('category', function($query) use ($request){
-        //         $query->where('slug', $request->category);
-        //     });
-        // });
+        $news->when($request->has('tag'), function ($query) use ($request) {
+            $query->whereHas('tags', function ($query) use ($request) {
+                $query->where('name', $request->tag);
+            });
+        });
 
-        // $news->when($request->has('search'), function($query) use ($request){
-        //     $query->where(function($query) use ($request)
-        //     {
-        //         $query->where('title', 'like', '%'.$request->search.'%')
-        //         ->orWhere('content', 'like', '%'.$request->search.'%');
-        //     })
-        //     ->orWhereHas('category', function($query) use ($request)
-        //     {
-        //         $query->where('name', 'like', '%'.$request->search.'%');
-        //     });
-        // });
-
-        $news->when($request->has('category') && !empty($request->category), function($query) use ($request) {
-            $query->whereHas('category', function($query) use ($request) {
+        $news->when($request->has('category') && !empty($request->category), function ($query) use ($request) {
+            $query->whereHas('category', function ($query) use ($request) {
                 $query->where('slug', $request->category);
             });
         });
 
-        $news->when($request->has('search'), function($query) use ($request) {
-            $query->where(function($query) use ($request){
-                $query->where('title', 'like','%'.$request->search.'%')
-                    ->orWhere('content', 'like','%'.$request->search.'%');
-            })->orWhereHas('category', function($query) use ($request){
-                $query->where('name', 'like','%'.$request->search.'%');
-            });
+        $news->when($request->has('search'), function ($query) use ($request) {
+            $query->where(function ($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%')
+                    ->orWhere('content', 'like', '%' . $request->search . '%');
+            })
+                ->orWhereHas('category', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%');
+                });
         });
-
-
-
 
         $news = $news->activeEntries()->withLocalize()->paginate(10);
 
 
         $recentNews = News::with(['auther', 'category'])
-        ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
-
+            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
 
         $mostCommonTags = $this->mostCommonTags();
 
         $categories = Category::where(['status' => 1, 'language' => getLanguage()])->get();
 
-        return view('frontend.news', compact('news', 'recentNews','mostCommonTags', 'categories'));
+        return view('frontend.news', compact('news', 'recentNews', 'mostCommonTags', 'categories'));
     }
 }
