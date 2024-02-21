@@ -34,14 +34,13 @@
                                     <input type="text" placeholder="Type here" value="{{request()->search}}" name="search">
                                 </div>
                                 <div class="col-lg-4">
-                                    <select>
-                                        <option value="#">Select Category</option>
-                                        <option value="#">Category 1</option>
-                                        <option value="#">Category 2</option>
-                                        <option value="#">Category 3</option>
-                                        <option value="#">Category 4</option>
-                                        <option value="#">Category 5</option>
-                                        <option value="#">Category 6</option>
+                                    <select name="category">
+                                        <option value="">{{__('All')}}</option>
+                                        @foreach ($categories as $category)
+                                        <option value="{{$category->slug}}">{{$category->name}}</option>
+                                        @endforeach
+
+
                                     </select>
                                 </div>
                                 <div class="col-lg-3">
@@ -118,7 +117,7 @@
                 <div class="col-md-4">
                     <div class="sidebar-sticky">
                         <aside class="wrapper__list__article ">
-                            <h4 class="border_section">Sidebar</h4>
+                            <h4 class="border_section">{{__('Sidebar')}}</h4>
                             <div class="wrapper__list__article-small">
                                 @foreach ($recentNews  as $news)
 
