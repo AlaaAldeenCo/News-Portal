@@ -182,6 +182,13 @@ class HomeController extends Controller
                 $query->where('name', 'like', '%'.$request->search.'%');
             })->activeEntries()->withLocalize()->paginate(10);
         }
-        return view('frontend.news', compact('news'));
+
+        $recentNews = News::with(['auther', 'category'])
+        ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
+
+
+        $mostCommonTags = $this->mostCommonTags();
+
+        return view('frontend.news', compact('news', 'recentNews','mostCommonTags'));
     }
 }
