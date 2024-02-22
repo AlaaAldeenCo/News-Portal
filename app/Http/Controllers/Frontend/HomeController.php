@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\HomeSectionSetting;
 use App\Models\News;
 use App\Models\SocialCount;
+use App\Models\Subscriber;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -210,9 +211,18 @@ class HomeController extends Controller
 
     public function SubscribeNewsLetter(Request $request)
     {
-        $request->validate([
-            'email' => ['required', 'email', 'max:255']
-        ]
-          );
+        $request->validate(
+            [
+                'email' => ['required', 'email', 'max:255', 'unique:subscribers,email']
+            ],
+            [
+                'email.unique' => 'Email is already subscribed'
+            ]
+        );
+        $subscriber = new Subscriber();
+        $subscriber->email = $request->email;
+        $subscriber->save();
+        return response(['status' => 'success', 'message' => 'Subscribed successfully']);
+
     }
 }
