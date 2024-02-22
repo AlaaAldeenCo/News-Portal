@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\HomeSectionSettingController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RolePermisionController;
 use App\Http\Controllers\Admin\SocialCountController;
 use App\Http\Controllers\Admin\SubscriberController;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +53,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
 
     /* Subscriber Route */
     Route::resource('subscribers', SubscriberController::class);
+
+    /* Roles And Permissions Routes */
+    Route::get('role', [RolePermisionController::class, 'index'])->name('role.index');
+    Route::get('role/create', [RolePermisionController::class, 'create'])->name('role.create');
 });

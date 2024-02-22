@@ -25,6 +25,7 @@
                     <li><a class="nav-link" href="{{ route('admin.news.index') }}">{{__('All News')}}</a></li>
                     <li><a class="nav-link" href="{{ route('admin.pending.news') }}">{{__('All Pending News')}}</a></li>
                 </ul>
+            </li>
 
 
             <li><a class="nav-link" href="{{ route('admin.social-count.index') }}"><i class="far fa-square"></i>
@@ -35,6 +36,14 @@
                     <span>{{__('Language')}}</span></a></li>
             <li><a class="nav-link" href="{{ route('admin.subscribers.index') }}"><i class="far fa-square"></i>
                     <span>{{__('Subscribers')}}</span></a></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
+                            <span>{{__('Access Management')}}</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="{{ route('admin.role.index') }}">{{__('Roles and Permissions')}}</a></li>
+                        </ul>
+                    </li>
             {{-- <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Layout</span></a>
@@ -43,7 +52,7 @@
                     <li><a class="nav-link" href="layout-transparent.html">Transparent Sidebar</a></li>
                     <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
                 </ul> --}}
-            </li>
+            {{-- </li> --}}
 
         </ul>
 
