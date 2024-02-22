@@ -40,6 +40,18 @@
 
     <script>
 
+const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
 $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -66,6 +78,36 @@ $.ajaxSetup({
                         console.log(data);
                     }
                 })
+            })
+        })
+
+        /* Subscribe Newsletter */
+        $('.newsletter-form').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                method: 'POST',
+                url: "{{route('subscribe-newsletter')}}",
+                data: $(this).serialize(),
+                beforeSend: function(){
+                    $('.newsletter-button').text('Loading...');
+                    $('.newsletter-button').attr('disabled', true);
+                },
+                success: function(data){
+
+                },
+                error: function(data){
+                    $('.newsletter-button').text('Sign Up');
+                    $('.newsletter-button').attr('disabled', false);
+                    if(data.status === 422){
+                        let errors = data.responseJSON.errors;
+                        $.each(errors, function(index, value){
+                            Toast.fire({
+                                icon: 'error',
+                                title: value[0]
+                            })
+                        })
+                    }
+                }
             })
         })
 

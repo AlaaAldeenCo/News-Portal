@@ -207,4 +207,12 @@ class HomeController extends Controller
 
         return view('frontend.news', compact('news', 'recentNews', 'mostCommonTags', 'categories'));
     }
+
+    public function SubscribeNewsLetter(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email', 'max:255']
+        ]
+          );
+    }
 }
