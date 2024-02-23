@@ -24,51 +24,26 @@
 
                     </div>
                     <hr>
+                    @foreach ($permissions as $groupName => $permission)
 
-                    {{-- <div class="form-group">
-                        <div class="control-label">Toggle switch single</div>
-                        <label class="custom-switch mt-2">
-                          <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                          <span class="custom-switch-indicator"></span>
-                          <span class="custom-switch-description">I agree with terms and conditions</span>
-                        </label>
-                    </div> --}}
                     <div class="form-group">
-                        <h6>Permissions Category</h6>
+                        <h6>{{$groupName}}</h6>
                         <div class="row">
+                            @foreach ($permission as $item)
                             <div class="col-md-3">
                                 <label class="custom-switch mt-2">
-                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
+                                    <input type="checkbox" value="{{$item->name}}" name="permissions[]" class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
-                                    <span class="custom-switch-description">Category Index</span>
+                                    <span class="custom-switch-description">{{$item->name}}</span>
                                 </label>
                             </div>
+                            @endforeach
 
-                            <div class="col-md-3">
-                                <label class="custom-switch mt-2">
-                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                                    <span class="custom-switch-indicator"></span>
-                                    <span class="custom-switch-description">Category Create</span>
-                                </label>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="custom-switch mt-2">
-                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                                    <span class="custom-switch-indicator"></span>
-                                    <span class="custom-switch-description">Category Update</span>
-                                </label>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class="custom-switch mt-2">
-                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                                    <span class="custom-switch-indicator"></span>
-                                    <span class="custom-switch-description">Category Delete</span>
-                                </label>
-                            </div>
                         </div>
                     </div>
+
+                    @endforeach
+
 
                     <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
                 </form>

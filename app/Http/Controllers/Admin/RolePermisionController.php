@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+
 class RolePermisionController extends Controller
 {
     public function index()
@@ -13,6 +15,7 @@ class RolePermisionController extends Controller
 
     public function create()
     {
-        return view('admin.role.create');
+        $permissions = Permission::all()->groupBy('group_name');
+        return view('admin.role.create', compact('permissions'));
     }
 }
