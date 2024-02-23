@@ -12,13 +12,13 @@
 
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.social-count.store') }}" method="POST">
+                <form action="{{ route('admin.role.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="">{{ __('Role Name') }}</label>
                         <input type="text" name="role" id="" class="form-control">
 
-                        @error('language')
+                        @error('role')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
 
