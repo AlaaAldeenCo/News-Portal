@@ -61,4 +61,16 @@ class RolePermisionController extends Controller
         toast(__('Updated Successfully'), 'success');
         return redirect()->route('admin.role.index');
     }
+
+    public function destroy(string $id)
+    {
+        $role = Role::findOrFail($id);
+        if($role->name === 'Super Admin')
+        {
+            return response(['status' => 'error', 'message' => __('Can\'t delete the Super Admin')]);
+        }
+        $role->delete();
+        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
+
+    }
 }
