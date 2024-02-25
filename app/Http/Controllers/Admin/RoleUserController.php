@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRoleUserStoreRequest;
+use App\Http\Requests\AdminRoleUserUpdateRequest;
 use App\Mail\RoleUserCreateMail;
 use App\Models\Admin;
 use Illuminate\Http\Request;
@@ -75,15 +76,39 @@ class RoleUserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $admin = Admin::findOrFail($id);
+        $roles = Role::all();
+        return view('admin.role-user.edit', compact('admin', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AdminRoleUserUpdateRequest $request, string $id)
     {
-        //
+        if($request->has('password') && !empty($request->password))
+        {
+            $request->validate([
+                'password' => ['confirmed', 'min:8']
+            ]);
+        }
+
+        $user = Admin::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if($request->has('password') && !empty($request->password))
+        {
+            $user->password = bcrypt($request->paassword);
+        }
+
+        $user->save();
+
+        /* Assign A Role To The User */
+        $user->syncRoles($request->role);
+
+        toast(__('Updated Successfully'), 'success');
+        return redirect()->route('admin.role-users.index');
+
     }
 
     /**
