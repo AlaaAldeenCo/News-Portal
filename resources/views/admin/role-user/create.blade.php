@@ -12,7 +12,7 @@
 
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.role.store') }}" method="POST">
+                <form action="{{ route('admin.role-users.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="">{{ __('User Name') }}</label>
@@ -57,7 +57,7 @@
                     <div class="form-group">
                         <label for="">{{ __('Role') }}</label>
                         <select name="role" class="form-control select2">
-                            <option>Select</option>
+                            <option value="">{{__('Select')}}</option>
                             @foreach ($roles as $role)
                             <option value="{{$role->name}}">{{$role->name}}</option>
                             @endforeach
@@ -68,29 +68,6 @@
                         @enderror
 
                     </div>
-
-                    {{-- <hr>
-                    @foreach ($permissions as $groupName => $permission)
-
-                    <div class="form-group">
-                        <h6>{{$groupName}}</h6>
-                        <div class="row">
-                            @foreach ($permission as $item)
-                            <div class="col-md-3">
-                                <label class="custom-switch mt-2">
-                                    <input type="checkbox" value="{{$item->name}}" name="permissions[]" class="custom-switch-input">
-                                    <span class="custom-switch-indicator"></span>
-                                    <span class="custom-switch-description">{{$item->name}}</span>
-                                </label>
-                            </div>
-                            @endforeach
-
-                        </div>
-                    </div>
-
-                    @endforeach --}}
-
-
                     <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
                 </form>
             </div>
