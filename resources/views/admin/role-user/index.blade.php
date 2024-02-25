@@ -24,33 +24,30 @@
                                 <th class="text-center">
                                     #
                                 </th>
-                                <th>{{ __('Role Name') }}</th>
+                                <th>{{ __('Name') }}</th>
                                 <th>{{ __('Email') }}</th>
                                 <th>{{ __('Role') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($roles as $role)
+                            @foreach ($admins as $admin)
                             <tr>
-                                <td>{{$role->id}}</td>
-                                <td>{{$role->name}}</td>
+                                <td>{{$admin->id}}</td>
+                                <td>{{$admin->name}}</td>
+                                <td>{{$admin->email}}</td>
+                                <td><span class="badge bg-primary text-light">{{$admin->getRoleNames()->first()}}</span></td>
                                 <td>
-                                    @foreach ($role->permissions as $permission)
-                                        <span class="badge bg-primary text-light">{{$permission->name}}</span>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    <a href="{{ route('admin.role.edit', $role->id) }}"
+                                    <a href="{{ route('admin.role-users.edit', $admin->id) }}"
                                         class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('admin.role.destroy', $role->id) }}"
+                                    <a href="{{ route('admin.role-users.destroy', $admin->id) }}"
                                         class="btn btn-danger delete-item"><i
                                             class="fas fa-trash-alt"></i></a>
                                 </td>
 
 
                             </tr>
-                            @endforeach --}}
+                            @endforeach
 
 
                         </tbody>
@@ -69,7 +66,7 @@
             $("#table").dataTable({
                 "columnDefs": [{
                     "sortable": false,
-                    "targets": [1]
+                    "targets": [2, 3]
                 }]
             });
 
