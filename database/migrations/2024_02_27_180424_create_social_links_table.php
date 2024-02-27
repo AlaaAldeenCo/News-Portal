@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('footer_grid_ones', function (Blueprint $table) {
+        Schema::create('social_links', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('footer_grid_ones');
+        Schema::dropIfExists('social_links');
     }
 };

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RolePermisionController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\Admin\SocialCountController;
+use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +67,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
 
     /* Admin User Route */
     Route::resource('role-users', RoleUserController::class);
+
+    /* Social Link Controller */
+    Route::resource('social-link', SocialLinkController::class);
 
     /* Footer Grid One Route */
     Route::resource('footer-grid-one', FooterGridOneController::class);
