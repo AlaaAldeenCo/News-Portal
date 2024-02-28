@@ -29,7 +29,7 @@
                                 ->orderByDesc('id')
                                 ->get();
 
-                            $homeSectionSetting = \App\Models\HomeSectionSetting::where('language', $language->lang)->first();
+                                $footerInfo = \App\Models\FooterInfo::where('language', $language->lang)->first();
 
                         @endphp
                         <div class="tab-pane fade show {{ $loop->index === 0 ? 'active' : '' }}"
@@ -38,6 +38,7 @@
                                 <form action="{{ route('admin.footer-info.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group">
+                                        <img src="{{ asset(@$footerInfo->logo) }}" width="100px" alt=""><br>
                                         <label for="">{{ __('Logo') }}</label>
                                         <input type="file" class="form-control" name="logo">
                                         <input type="hidden" value="{{$language->lang}}" name="language">
@@ -47,12 +48,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="">{{ __('Short Description') }}</label>
-                                        <textarea name="description" class="form-control" id="" cols="30" rows="10"></textarea>
+                                        <textarea name="description" class="form-control" id="" cols="30" rows="10">{{@$footerInfo->description}}</textarea>
 
                                     </div>
                                     <div class="form-group">
                                         <label for="">{{ __('Copyright text') }}</label>
-                                        <input type="text" name="copyright" class="form-control">
+                                        <input type="text" name="copyright" class="form-control" value="{{@$footerInfo->copyright}}">
 
                                     </div>
                                     <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
