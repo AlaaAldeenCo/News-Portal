@@ -73,28 +73,33 @@
                         </thead>
                         <tbody>
 
-
+                            @foreach ($socialLinks as $socialLink)
                             <tr>
-                                <td></td>
-                                <td><i style="font-size:30px" class=""></i></td>
-                                <td></td>
+                                <td>{{$socialLink->id}}</td>
+                                <td><i style="font-size:30px" class="{{$socialLink->icon}}"></i></td>
+                                <td>{{$socialLink->url}}</td>
                                 <td>
-
+                                    @if ($socialLink->status === 1)
                                     <span class="badge badge-success">{{ __('Yes') }}</span>
 
-                                        <span class="badge badge-danger">{{ __('No') }}</span>
+                                    @else
+                                    <span class="badge badge-danger">{{ __('No') }}</span>
+
+                                    @endif
 
                                 </td>
                                 <td>
-                                    {{-- <a href="{{ route('admin.social-link.edit', $link->id) }}"
+                                    <a href="{{ route('admin.social-link.edit', $socialLink->id) }}"
                                         class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('admin.social-link.destroy', $link->id) }}"
+                                    <a href="{{ route('admin.social-link.destroy', $socialLink->id) }}"
                                         class="btn btn-danger delete-item"><i
-                                            class="fas fa-trash-alt"></i></a> --}}
+                                            class="fas fa-trash-alt"></i></a>
 
                                 </td>
 
                             </tr>
+                            @endforeach
+
 
 
 
