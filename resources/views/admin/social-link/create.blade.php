@@ -48,11 +48,11 @@
     </section>
 @endsection
 
-{{-- @push('scripts')
+@push('scripts')
 <script>
     $(".colorpickerinput").colorpicker({
         format: 'hex',
         component: '.input-group-append',
     });
 </script>
-@endpush --}}
+@endpush
