@@ -72,9 +72,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     /* Social Link Controller */
     Route::resource('social-link', SocialLinkController::class);
 
-    /* Footer Grid One Route */
-    Route::resource('footer-grid-one', FooterGridOneController::class);
-
     /* Footer Info Route */
     Route::resource('footer-info', FooterInfoController::class);
+
+    /* Footer Grid One Route */
+    Route::resource('footer-grid-one', FooterGridOneController::class);
 });
