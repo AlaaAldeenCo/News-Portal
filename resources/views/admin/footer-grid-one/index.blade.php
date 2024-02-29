@@ -30,9 +30,7 @@
                 <div class="tab-content tab-bordered" id="myTab3Content">
                     @foreach ($languages as $language)
                         @php
-                            $categories = \App\Models\Category::where('language', $language->lang)
-                                ->orderByDesc('id')
-                                ->get();
+                            $footer = \App\Models\FooterGridOne::where('language', $language->lang)->get();
                         @endphp
                         <div class="tab-pane fade show {{ $loop->index === 0 ? 'active' : '' }}"
                             id="home-{{ $language->lang }}" role="tabpanel" aria-labelledby="home-tab2">
@@ -45,40 +43,30 @@
                                                     #
                                                 </th>
                                                 <th>{{ __('Name') }}</th>
-                                                <th>{{ __('Language Code') }}</th>
-                                                <th>{{ __('In Nav') }}</th>
                                                 <th>{{ __('Status') }}</th>
+                                                <th>{{ __('Language Code') }}</th>
                                                 <th>{{ __('Action') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($categories as $category)
+                                            @foreach ($footer as $item)
                                                 <tr>
-                                                    <td>{{ $category->id }}</td>
-                                                    <td>{{ $category->name }}</td>
-                                                    <td>{{ $category->language }}</td>
+                                                    <td>{{ $item->id }}</td>
+                                                    <td>{{ $item->name }}</td>
                                                     <td>
-                                                        @if ($category->show_at_nav == 1)
-                                                            <span class="badge badge-primary">{{ __('Yes') }}</span>
-                                                        @else
-                                                            <span class="badge badge-danger">{{ __('No') }}</span>
-                                                        @endif
-
-                                                    </td>
-                                                    <td>
-                                                        @if ($category->status == 1)
+                                                        @if ($item->status == 1)
                                                             <span class="badge badge-success">{{ __('Yes') }}</span>
                                                         @else
                                                             <span class="badge badge-danger">{{ __('No') }}</span>
                                                         @endif
 
                                                     </td>
-
+                                                    <td>{{ $item->language }}</td>
 
                                                     <td>
-                                                        <a href="{{ route('admin.category.edit', $category->id) }}"
+                                                        <a href="{{ route('admin.footer-grid-one.edit', $item->id) }}"
                                                             class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                                        <a href="{{ route('admin.category.destroy', $category->id) }}"
+                                                        <a href="{{ route('admin.footer-grid-one.destroy', $item->id) }}"
                                                             class="btn btn-danger delete-item"><i
                                                                 class="fas fa-trash-alt"></i></a>
                                                     </td>
