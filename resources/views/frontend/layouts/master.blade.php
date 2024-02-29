@@ -27,6 +27,9 @@
         $footerGridOne = \App\Models\FooterGridOne::where(['status' => 1, 'language' => getLanguage()])->get();
         $footerGridTwo = \App\Models\FooterGridTwo::where(['status' => 1, 'language' => getLanguage()])->get();
         $footerGridThree = \App\Models\FooterGridThree::where(['status' => 1, 'language' => getLanguage()])->get();
+        $footerTitleOne = \App\Models\FooterTitle::where(['language' => getlanguage(), 'key' => 'grid_one_title'])->first();
+        $footerTitleTwo = \App\Models\FooterTitle::where(['language' => getlanguage(), 'key' => 'grid_two_title'])->first();
+        $footerTitleThree = \App\Models\FooterTitle::where(['language' => getlanguage(), 'key' => 'grid_three_title'])->first();
     @endphp
     <!-- Header news -->
     @include('frontend.layouts.header')

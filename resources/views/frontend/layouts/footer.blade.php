@@ -32,7 +32,7 @@
                             <div class="widget__footer">
                                 <div class="dropdown-footer">
                                     <h4 class="footer-title">
-                                        entertainment
+                                        {{$footerTitleOne->value}}
                                         <span class="fa fa-angle-down"></span>
                                     </h4>
 
@@ -51,7 +51,7 @@
                             <div class="widget__footer">
                                 <div class="dropdown-footer">
                                     <h4 class="footer-title">
-                                        health
+                                        {{$footerTitleTwo->value}}
                                         <span class="fa fa-angle-down"></span>
                                     </h4>
 
@@ -70,7 +70,7 @@
                             <div class="widget__footer">
                                 <div class="dropdown-footer">
                                     <h4 class="footer-title">
-                                        business
+                                        {{$footerTitleThree->value}}
                                         <span class="fa fa-angle-down"></span>
                                     </h4>
 
