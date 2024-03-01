@@ -25,36 +25,35 @@
                                 <th class="text-center">
                                     #
                                 </th>
-                                <th>{{ __('Icon') }}</th>
-
-                                <th>{{ __('Url') }}</th>
-                                <th>{{ __('Status') }}</th>
-
+                                <th>{{ __('Email') }}</th>
+                                <th>{{ __('Subject') }}</th>
+                                <th>{{ __('Message') }}</th>
+                                <th>{{ __('Replied') }}</th>
                                 <th>{{ __('Action') }}</th>
-
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach ($socialLinks as $socialLink)
+                            @foreach ($messages as $message)
                             <tr>
-                                <td>{{$socialLink->id}}</td>
-                                <td><i style="font-size:30px" class="{{$socialLink->icon}}"></i></td>
-                                <td>{{$socialLink->url}}</td>
+                                <td>{{$message->id}}</td>
+                                <td>{{$message->email}}</td>
+                                <td>{{$message->subject}}</td>
+                                <td>{{$message->message}}</td>
                                 <td>
-                                    @if ($socialLink->status === 1)
-                                    <span class="badge badge-success">{{ __('Yes') }}</span>
-
+                                    @if ($message->replied == 1)
+                                    <i style="font-size:20px" class="fas fa-check text-success"></i>
                                     @else
-                                    <span class="badge badge-danger">{{ __('No') }}</span>
-
+                                    <i style="font-size:20px" class="fas fa-clock text-warning"></i>
                                     @endif
 
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.social-link.edit', $socialLink->id) }}"
-                                        class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('admin.social-link.destroy', $socialLink->id) }}"
+
+                                    <a href=""
+                                        class="btn btn-primary"><i
+                                        class="fas fa-envelope"></i></a>
+                                    <a href="{{ route('admin.social-link.destroy', $message->id) }}"
                                         class="btn btn-danger delete-item"><i
                                             class="fas fa-trash-alt"></i></a>
 
