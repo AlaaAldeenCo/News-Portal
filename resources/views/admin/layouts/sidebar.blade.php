@@ -32,6 +32,7 @@
                     <span>{{__('Pages')}}</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{ route('admin.about.index') }}">{{__('About Page')}}</a></li>
+                    <li><a class="nav-link" href="{{ route('admin.contact.index') }}">{{__('Contact Page')}}</a></li>
                 </ul>
             </li>
 
