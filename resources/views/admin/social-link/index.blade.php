@@ -84,7 +84,10 @@
                 "columnDefs": [{
                     "sortable": false,
                     "targets": [2, 3]
-                }]
+                }],
+                "order":[
+                    [0, 'desc']
+                ]
             });
 
     </script>

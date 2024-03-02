@@ -13,6 +13,7 @@ class ContactMessageController extends Controller
 {
     public function index()
     {
+        RecivedMail::query()->update(['seen' => 1]);
         $messages = RecivedMail::all();
         return view('admin.contact-message.index', compact('messages'));
     }

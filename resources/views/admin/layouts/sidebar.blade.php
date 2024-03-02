@@ -40,7 +40,11 @@
             <li><a class="nav-link" href="{{ route('admin.social-count.index') }}"><i class="far fa-square"></i>
                     <span>{{__('Social Count')}}</span></a></li>
             <li><a class="nav-link" href="{{ route('admin.contact-message.index') }}"><i class="far fa-square"></i>
-                    <span>{{__('Contact Messages')}}</span></a></li>
+                    <span>{{__('Contact Messages')}}</span>
+                @if ($unreadMessages > 0)
+                <i class="badge bg-danger" style="color: #fff">{{$unreadMessages}}</i>
+                @endif
+                </a></li>
             <li><a class="nav-link" href="{{ route('admin.home-section-setting.index') }}"><i class="far fa-square"></i>
                     <span>{{__('Home Section Setting')}}</span></a></li>
             <li><a class="nav-link" href="{{ route('admin.language.index') }}"><i class="far fa-square"></i>

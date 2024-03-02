@@ -3,16 +3,11 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ __('Social Links') }}</h1>
+            <h1>{{ __('Contact Message') }}</h1>
         </div>
         <div class="card card-primary">
             <div class="card-header">
-                <h4>{{ __('All Social Links') }}</h4>
-                <div class="card-header-action">
-                    <a href="{{ route('admin.social-link.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> {{ __('Create new') }}
-                    </a>
-                </div>
+                <h4>{{ __('All Messages') }}</h4>
             </div>
 
             <div class="card-body">
@@ -126,7 +121,10 @@
             "columnDefs": [{
                 "sortable": false,
                 "targets": [2, 3]
-            }]
+            }],
+            "order":[
+                    [0, 'desc']
+                ]
         });
     </script>
 @endpush
