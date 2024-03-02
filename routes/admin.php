@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RolePermisionController;
 use App\Http\Controllers\Admin\RoleUserController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SocialCountController;
 use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\SubscriberController;
@@ -103,5 +104,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     /* Contact Message Reply Route */
     Route::get('contact-message', [ContactMessageController::class, 'index'])->name('contact-message.index');
     Route::post('contact-send-reply', [ContactMessageController::class, 'sendReply'])->name('contact.send-reply');
+
+    /* Settings Routes */
+    Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
 
 });
