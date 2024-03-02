@@ -11,4 +11,9 @@ class SettingController extends Controller
     {
         return view('admin.setting.index');
     }
+
+    public function updateGeneralSetting(Request $request)
+    {
+        dd($request->all());
+    }
 }

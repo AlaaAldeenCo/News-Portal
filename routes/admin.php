@@ -107,5 +107,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
 
     /* Settings Routes */
     Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
+    Route::put('general-setting', [SettingController::class, 'updateGeneralSetting'])->name('general-setting.update');
 
 });
