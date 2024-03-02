@@ -85,29 +85,33 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="">{{ __('Subject') }}</label>
-                        <input type="text" name="subject" id="" class="form-control">
-                        <input type="hidden" name="email" value="{{ $message->email }}" id=""
+                    <form action="{{route('admin.contact.send-reply')}}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="">{{ __('Subject') }}</label>
+                            <input type="text" name="subject" id="" class="form-control">
+                            <input type="hidden" name="email" value="{{ $message->email }}" id=""
+                                class="form-control">
+                            <input type="hidden" name="message_id" value="{{ $message->id }}" id=""
                             class="form-control">
-                        <input type="hidden" name="message_id" value="{{ $message->id }}" id=""
-                        class="form-control">
-                        @error('subject')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="">{{ __('Message') }}</label>
-                        <textarea name="message" class="form-control" style="height: 200px !important;"></textarea>
-                        @error('message')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">{{ __('Close') }}</button>
-                        <button type="submit" class="btn btn-primary">{{ __('Send') }}</button>
-                    </div>
+                            @error('subject')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="">{{ __('Message') }}</label>
+                            <textarea name="message" class="form-control" style="height: 200px !important;"></textarea>
+                            @error('message')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">{{ __('Close') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Send') }}</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
