@@ -1,5 +1,7 @@
 <?php
 
+use PhpParser\Node\Expr\Cast\String_;
+
 /* Format News Tags */
 
 use App\Models\Language;
@@ -60,4 +62,17 @@ function convertToKFormat(int $number)
     {
         return round($number/1000000, 1).'M';
     }
+}
+
+/* Set Sidebar Items Active */
+function setSidebarActive(array $routes): ?string
+{
+    foreach($routes as $route)
+    {
+        if(request()->routeIs($route))
+        {
+            return 'active';
+        }
+    }
+    return '';
 }
