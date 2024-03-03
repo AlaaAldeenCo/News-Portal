@@ -82,7 +82,7 @@
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                       </div>
-                      
+
                     <div class="form-group">
                         <label for="">{{ __('Status') }}</label>
                         <select name="status" id="" class="form-control">
@@ -99,3 +99,12 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        $(".colorpickerinput").colorpicker({
+            format: 'hex',
+            component: '.input-group-append',
+        });
+    </script>
+@endpush
