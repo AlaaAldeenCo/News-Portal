@@ -5,7 +5,7 @@
             @method('PUT')
             <div class="form-group">
                 <label>{{__('Site Seo Title')}}</label>
-                <input class="form-control" type="text" name="site_seo_title" value="">
+                <input class="form-control" type="text" name="site_seo_title" value="{{$settings['site_seo_title']}}">
                 @error('site_seo_title')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -13,7 +13,7 @@
 
             <div class="form-group">
                 <label>{{__('Site Seo Description')}}</label>
-                <textarea name="site_seo_description" class="form-control" style="height: 300px" id="" cols="30" rows="10"></textarea>
+                <textarea name="site_seo_description" class="form-control" style="height: 300px" id="" cols="30" rows="10">{{$settings['site_seo_description']}}</textarea>
                 @error('site_seo_description')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
@@ -21,7 +21,7 @@
 
             <div class="form-group">
                 <label>{{__('Site Seo Keywords')}}</label>
-                <input class="form-control inputtags" type="text" name="site_seo_keywords">
+                <input class="form-control inputtags" type="text" name="site_seo_keywords" value="{{$settings['site_seo_keywords']}}">
                 @error('site_seo_keywords')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror

@@ -49,6 +49,22 @@ class SettingController extends Controller
 
     public function updateSeoSetting(AdminSeoSettingUpdateRequest $request)
     {
-        dd($request->all());
+        Setting::updateOrCreate(
+            ['key' => 'site_seo_title'],
+            ['value' => $request->site_seo_title]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'site_seo_description'],
+            ['value' => $request->site_seo_description]
+        );
+
+        Setting::updateOrCreate(
+            ['key' => 'site_seo_keywords'],
+            ['value' => $request->site_seo_keywords]
+        );
+
+        toast(__('Updated Successfully'), 'success');
+        return redirect()->back();
     }
 }
