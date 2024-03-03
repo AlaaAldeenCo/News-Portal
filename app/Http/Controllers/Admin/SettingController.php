@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminGeneralSettingUpdateRequest;
+use App\Http\Requests\AdminSeoSettingUpdateRequest;
 use App\Models\Setting;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
@@ -44,5 +45,10 @@ class SettingController extends Controller
 
         toast(__('Updated Successfully'), 'success');
         return redirect()->back();
+    }
+
+    public function updateSeoSetting(AdminSeoSettingUpdateRequest $request)
+    {
+        dd($request->all());
     }
 }
