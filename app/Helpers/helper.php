@@ -76,3 +76,11 @@ function setSidebarActive(array $routes): ?string
     }
     return '';
 }
+
+/* Check Permission */
+function canAccess(array $permissions)
+{
+    // return auth()->guard('admin')->user()->hasPermissionTo($permissions, 'admin');
+    return auth()->guard('admin')->user()->hasAnyPermission($permissions);
+    // $permission = auth()->guard('admin')->user()->hasAnyPermission($permissions);
+}
