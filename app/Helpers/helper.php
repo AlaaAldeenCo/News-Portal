@@ -81,6 +81,21 @@ function setSidebarActive(array $routes): ?string
 function canAccess(array $permissions)
 {
     // return auth()->guard('admin')->user()->hasPermissionTo($permissions, 'admin');
-    return auth()->guard('admin')->user()->hasAnyPermission($permissions);
-    // $permission = auth()->guard('admin')->user()->hasAnyPermission($permissions);
+    $permission = auth()->guard('admin')->user()->hasAnyPermission($permissions);
+    $superAdmin = auth()->guard('admin')->user()->hasRole('Super Admin');
+    if($permission || $superAdmin)
+    {
+        return true;
+    }
+
+    else
+    {
+        return false;
+    }
+}
+
+/* Check If Is It Super Admin */
+function isSuperAdmin()
+{
+    return auth()->guard('admin')->user()->hasRole('Super Admin');
 }
