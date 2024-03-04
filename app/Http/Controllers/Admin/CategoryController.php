@@ -13,10 +13,10 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:category index,admin'])->only('index');
+        $this->middleware(['permission:category index,admin'])->only(['index']);
         $this->middleware(['permission:category create,admin'])->only(['create', 'store']);
         $this->middleware(['permission:category update,admin'])->only(['edit', 'update']);
-        $this->middleware(['permission:category delete,admin'])->only('destroy');
+        $this->middleware(['permission:category delete,admin'])->only(['destroy']);
     }
     /**
      * Display a listing of the resource.

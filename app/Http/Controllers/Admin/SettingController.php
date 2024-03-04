@@ -12,6 +12,13 @@ use Illuminate\Http\Request;
 class SettingController extends Controller
 {
     use FileUploadTrait;
+
+    public function __construct()
+    {
+        $this->middleware(['permission:settings index,admin'])->only(['index']);
+        $this->middleware(['permission:settings update,admin'])->only(['updateGeneralSetting', 'updateSeoSetting', 'updateAppearanceSetting']);
+    }
+
     public function index()
     {
         return view('admin.setting.index');
@@ -26,8 +33,7 @@ class SettingController extends Controller
             ['value' => $request->site_name]
         );
 
-        if(!empty($logoPath))
-        {
+        if (!empty($logoPath)) {
             Setting::updateOrCreate(
                 ['key' => 'site_logo'],
                 ['value' => $logoPath]
@@ -35,8 +41,7 @@ class SettingController extends Controller
         }
 
 
-        if(!empty($faviconPath))
-        {
+        if (!empty($faviconPath)) {
             Setting::updateOrCreate(
                 ['key' => 'site_favicon'],
                 ['value' => $faviconPath]
