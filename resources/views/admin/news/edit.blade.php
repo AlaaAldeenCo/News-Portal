@@ -101,6 +101,8 @@
                                 </label>
                               </div>
                         </div>
+
+                        @if (canAccess(['news status', 'news all-access']))
                         <div class="col-md-3">
                             <div class="form-group">
                                 <div class="control-label">{{__('Is Breaking News')}}</div>
@@ -128,6 +130,7 @@
                                 </label>
                               </div>
                         </div>
+                        @endif
                     </div>
                     <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
                 </form>

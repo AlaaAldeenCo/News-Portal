@@ -61,9 +61,11 @@
                                                 <th>{{ __('Image') }}</th>
                                                 <th>{{ __('Title') }}</th>
                                                 <th>{{ __('Category') }}</th>
+                                                @if (canAccess(['news status', 'news all-access']))
                                                 <th>{{ __('In Breaking') }}</th>
                                                 <th>{{ __('In Slider') }}</th>
                                                 <th>{{ __('In Popular') }}</th>
+                                                @endif
                                                 <th>{{ __('Status') }}</th>
                                                 <th>{{ __('Action') }}</th>
                                             </tr>
@@ -75,6 +77,7 @@
                                                     <td><img src="{{asset($item->image)}}" width="80"></td>
                                                     <td style="width: 90px">{{ $item->title }}</td>
                                                     <td>{{ $item->category->name }}</td>
+                                                    @if (canAccess(['news status', 'news all-access']))
                                                     <td>
                                                         <label class="custom-switch mt-2">
                                                             <input {{$item->is_breaking_news === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="is_breaking_news" class="custom-switch-input toggle-status" >
@@ -93,6 +96,8 @@
                                                             <span class="custom-switch-indicator"></span>
                                                           </label>
                                                     </td>
+                                                    @endif
+
                                                     <td style="width: 30px">
                                                         <label class="custom-switch mt-2">
                                                             <input {{$item->status === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="status" class="custom-switch-input toggle-status" >
