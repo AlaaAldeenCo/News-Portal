@@ -54,41 +54,16 @@
                                                     <td style="width: 90px">{{ $item->title }}</td>
                                                     <td>{{ $item->category->name }}</td>
                                                     <td>
-                                                        <form action="">
+                                                        <form action="" id="approve_form">
                                                             <input type="hidden" value="{{$item->id}}" name="id">
                                                             <div class="form-group">
-                                                                <select name="is_approve" class="form-control">
+                                                                <select name="is_approved" class="form-control" id="approve-input">
                                                                     <option value="0">{{__('Pending')}}</option>
                                                                     <option value="1">{{__('Approved')}}</option>
                                                                 </select>
                                                             </div>
                                                         </form>
                                                     </td>
-                                                    {{-- <td>
-                                                        <label class="custom-switch mt-2">
-                                                            <input {{$item->is_breaking_news === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="is_breaking_news" class="custom-switch-input toggle-status" >
-                                                            <span class="custom-switch-indicator"></span>
-                                                          </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="custom-switch mt-2">
-                                                            <input {{$item->show_at_slider === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="show_at_slider" class="custom-switch-input toggle-status" >
-                                                            <span class="custom-switch-indicator"></span>
-                                                          </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="custom-switch mt-2">
-                                                            <input {{$item->show_at_popular === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="show_at_popular" class="custom-switch-input toggle-status" >
-                                                            <span class="custom-switch-indicator"></span>
-                                                          </label>
-                                                    </td>
-                                                    <td style="width: 30px">
-                                                        <label class="custom-switch mt-2">
-                                                            <input {{$item->status === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="status" class="custom-switch-input toggle-status" >
-                                                            <span class="custom-switch-indicator"></span>
-                                                          </label>
-                                                    </td> --}}
-
 
                                                     <td>
                                                         <a href="{{ route('admin.news.edit', $item->id) }}"
@@ -132,19 +107,18 @@
         @endforeach
 
         $(document).ready(function(){
-            $('.toggle-status').on('click', function(){
-                let id = $(this).data('id');
-                let name = $(this).data('name');
-                let status = $(this).prop('checked') ? 1:0;
 
+            $('#approve-input').on('change', function(){
+                $('#approve_form').submit();
+            });
+
+            $('#approve_form').on('submit', function(e){
+                e.preventDefault();
+                let data = $(this).serialize();
                 $.ajax({
-                    mehod: 'GET',
-                    url: "{{route('admin.toggle-news-status')}}",
-                    data: {
-                        id: id,
-                        name: name,
-                        status: status
-                    },
+                    mehod: 'PUT',
+                    url: "{{route('admin.approve.news')}}",
+                    data: data,
                     success: function(data){
                         if(data.status === 'success')
                         {
@@ -152,6 +126,7 @@
                                 icon: 'success',
                                 title: data.message
                             })
+                            window.location.reload();
                         }
                     },
                     error: function(error){
@@ -160,5 +135,7 @@
                 })
             })
         })
+
+        
     </script>
 @endpush

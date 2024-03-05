@@ -167,6 +167,16 @@ class NewsController extends Controller
         return $categories;
     }
 
+    /* Approve News */
+    public function approveNews(Request $request)
+    {
+        $news = News::findOrFail($request->id);
+        $news->is_approved = $request->is_approved;
+        $news->save();
+        return response(['status' => 'success', 'message'=> __('Updated Successfully')]);
+
+    }
+
     /* Change The Toggle Button Status */
     public function toggleNewsStatus(Request $request)
     {
