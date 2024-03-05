@@ -9,11 +9,6 @@
         <div class="card card-primary">
             <div class="card-header">
                 <h4>{{ __('Pending News') }}</h4>
-                <div class="card-header-action">
-                    <a href="{{ route('admin.news.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> {{ __('Create new') }}
-                    </a>
-                </div>
             </div>
 
             <div class="card-body">
@@ -59,6 +54,17 @@
                                                     <td style="width: 90px">{{ $item->title }}</td>
                                                     <td>{{ $item->category->name }}</td>
                                                     <td>
+                                                        <form action="">
+                                                            <input type="hidden" value="{{$item->id}}" name="id">
+                                                            <div class="form-group">
+                                                                <select name="is_approve" class="form-control">
+                                                                    <option value="0">{{__('Pending')}}</option>
+                                                                    <option value="1">{{__('Approved')}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </form>
+                                                    </td>
+                                                    {{-- <td>
                                                         <label class="custom-switch mt-2">
                                                             <input {{$item->is_breaking_news === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="is_breaking_news" class="custom-switch-input toggle-status" >
                                                             <span class="custom-switch-indicator"></span>
@@ -81,7 +87,7 @@
                                                             <input {{$item->status === 1 ? 'checked':''}} data-id="{{$item->id}}" type="checkbox" data-name="status" class="custom-switch-input toggle-status" >
                                                             <span class="custom-switch-indicator"></span>
                                                           </label>
-                                                    </td>
+                                                    </td> --}}
 
 
                                                     <td>
