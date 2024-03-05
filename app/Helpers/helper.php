@@ -95,7 +95,21 @@ function canAccess(array $permissions)
 }
 
 /* Check If Is It Super Admin */
-function isSuperAdmin()
+// function isSuperAdmin()
+// {
+//     return auth()->guard('admin')->user()->hasRole('Super Admin');
+// }
+
+/* Get Admin Role Name */
+function getRole()
 {
-    return auth()->guard('admin')->user()->hasRole('Super Admin');
+    $role = auth()->guard('admin')->user()->getRoleNames();
+    return $role->first();
 }
+
+/* Check Permission */
+function checkPermission(string $permission)
+{
+    return $permission = auth()->guard('admin')->user()->hasPermissionTo($permission);
+}
+

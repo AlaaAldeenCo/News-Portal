@@ -30,9 +30,23 @@
                 <div class="tab-content tab-bordered" id="myTab3Content">
                     @foreach ($languages as $language)
                         @php
-                            $news = \App\Models\News::with('category')->where('language', $language->lang)
-                                ->orderByDesc('id')
-                                ->get();
+                            if(canAccess(['news all-access']))
+                            {
+                                $news = \App\Models\News::with('category')->where('language', $language->lang)
+                                    ->where('is_approved', 1)
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
+                            }
+
+                            else
+                            {
+                                $news = \App\Models\News::with('category')->where('language', $language->lang)
+                                    ->where('is_approved', 1)
+                                    ->where('auther_id', auth()->guard('admin')->user()->id)
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
+                            }
+
                         @endphp
                         <div class="tab-pane fade show {{ $loop->index === 0 ? 'active' : '' }}"
                             id="home-{{ $language->lang }}" role="tabpanel" aria-labelledby="home-tab2">
