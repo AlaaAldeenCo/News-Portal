@@ -142,15 +142,15 @@
             @endif
 
             @if (canAccess(['access management index']))
-                <li class="dropdown {{ setSidebarActive(['admin.role-users.*', 'admin.role.*']) }}">
+                <li class="dropdown {{ setSidebarActive(['admin.admin-localization.*', 'admin.frontend-localization.*']) }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                             class="fas fa-columns"></i>
                         <span>{{ __('Localization') }}</span></a>
                     <ul class="dropdown-menu">
-                        <li class="{{ setSidebarActive(['admin.role-users.*']) }}"><a class="nav-link"
-                                href="{{ route('admin.localization.index') }}">{{ __('Users Roles') }}</a></li>
-                        <li class="{{ setSidebarActive(['admin.role.*']) }}"><a class="nav-link"
-                                href="{{ route('admin.role.index') }}">{{ __('Roles and Permissions') }}</a></li>
+                        <li class="{{ setSidebarActive(['admin.admin-localization.index']) }}"><a class="nav-link"
+                                href="{{ route('admin.admin-localization.index') }}">{{ __('Admin Lang') }}</a></li>
+                        <li class="{{ setSidebarActive(['admin.frontend-localization.index']) }}"><a class="nav-link"
+                                href="{{ route('admin.frontend-localization.index') }}">{{ __('Frontend Lang') }}</a></li>
                     </ul>
                 </li>
             @endif

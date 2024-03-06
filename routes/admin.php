@@ -114,6 +114,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
     Route::put('appearance-setting', [SettingController::class, 'updateAppearanceSetting'])->name('appearance-setting.update');
 
     /* Localization Controller */
-    Route::get('localization', [LocalizationController::class, 'index'])->name('localization.index');
+    Route::get('admin-localization', [LocalizationController::class, 'adminIndex'])->name('admin-localization.index');
+    Route::get('frontend-localization', [LocalizationController::class, 'frontendIndex'])->name('frontend-localization.index');
 
 });
