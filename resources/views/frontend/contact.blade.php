@@ -96,7 +96,7 @@
                         </li>
                     </ul>
 
-                    <div class="social__media">
+                    {{-- <div class="social__media">
                         <h5>find us</h5>
                         <ul class="list-inline">
 
@@ -126,7 +126,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

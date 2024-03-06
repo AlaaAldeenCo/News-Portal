@@ -243,10 +243,10 @@
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">Advertise</h4>
+                            <h4 class="border_section">{{__('Advertise')}}</h4>
                             <a href="#">
                                 <figure>
-                                    <img src="images/newsimage1.png" alt="" class="img-fluid">
+                                    <img src="{{asset('frontend/assets/images/newsimage1.png')}}" alt="" class="img-fluid">
                                 </figure>
                             </a>
                         </aside>
@@ -265,7 +265,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="large_add_banner_img">
-                            <img src="images/placeholder_large.jpg" alt="adds">
+                            <img src="{{asset('frontend/assets/images/placeholder_large.jpg')}}" alt="adds">
                         </div>
                     </div>
                 </div>

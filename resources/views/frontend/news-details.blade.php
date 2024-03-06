@@ -296,7 +296,7 @@
                                                                 value="{{ $news->id }}">
                                                             <input type="hidden" name="parent_id"
                                                                 value="{{ $comment->id }}">
-                                                            <button type="submit">submit</button>
+                                                            <button type="submit">{{__('submit')}}</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -607,10 +607,10 @@
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">Advertise</h4>
+                            <h4 class="border_section">{{__('Advertise')}}</h4>
                             <a href="#">
                                 <figure>
-                                    <img src="images/news6.jpg" alt="" class="img-fluid">
+                                    <img src="{{asset('frontend/assets/images/news6.jpg')}}" alt="" class="img-fluid">
                                 </figure>
                             </a>
                         </aside>
