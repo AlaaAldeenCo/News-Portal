@@ -141,6 +141,20 @@
                         <span>{{ __('Settings') }}</span></a></li>
             @endif
 
+            @if (canAccess(['access management index']))
+                <li class="dropdown {{ setSidebarActive(['admin.role-users.*', 'admin.role.*']) }}">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                            class="fas fa-columns"></i>
+                        <span>{{ __('Localization') }}</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ setSidebarActive(['admin.role-users.*']) }}"><a class="nav-link"
+                                href="{{ route('admin.localization.index') }}">{{ __('Users Roles') }}</a></li>
+                        <li class="{{ setSidebarActive(['admin.role.*']) }}"><a class="nav-link"
+                                href="{{ route('admin.role.index') }}">{{ __('Roles and Permissions') }}</a></li>
+                    </ul>
+                </li>
+            @endif
+
             {{-- <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Layout</span></a>
