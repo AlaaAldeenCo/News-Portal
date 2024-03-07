@@ -28,6 +28,17 @@ class LocalizationController extends Controller
         $langaugeCode = $request->languageCode;
 
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
-        $localizationStrings = []
+        $localizationStrings = [];
+        foreach($files as $file)
+        {
+            if($file->isDir())
+            {
+                continue;
+            }
+            $contents = file_get_contents($file->getPathname());
+            preg_match_all('/__\([\'"](.+?)[\'"]\)/', $contents, $matches);
+            dd($matches);
+        }
+
     }
 }
