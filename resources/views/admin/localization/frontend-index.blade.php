@@ -42,9 +42,15 @@
                                                 <input type="hidden" name="language_code" value="{{$language->lang}}">
                                                 <input type="hidden" name="file_name" value="frontend">
                                                 <button type="submit" class="btn btn-primary mx-3">{{__('Generate Strings')}}</button>
-
                                             </form>
-                                            <button class="btn btn-dark mx-3">{{__('Translate Strings')}}</button>
+
+                                            <form action="{{route('admin.translate-string')}}" class="translate-from" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="language_code" value="{{$language->lang}}">
+                                                <input type="hidden" name="file_name" value="frontend">
+                                                <button type="submit" class="btn btn-dark mx-3">{{__('Translate Strings')}}</button>
+                                            </form>
+
                                         </div>
                                     </div>
                                 </div>
@@ -112,19 +118,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST">
-
+                <form action="{{route('admin.update-lang-string')}}" method="POST">
+                    @csrf
                     <div class="form-group">
                         <label for="">{{ __('Value') }}</label>
                         <input type="text" name="value" class="form-control" value="">
                         <input type="hidden" name="lang_code" class="form-control">
                         <input type="hidden" name="key" class="form-control">
                         <input type="hidden" name="file_name" class="form-control">
-
-                        {{-- <input type="hidden" name="lang_code" class="form-control" value="">
-                        <input type="hidden" name="key" class="form-control" value="">
-                        <input type="hidden" name="file_name" class="form-control" value=""> --}}
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
@@ -147,9 +148,7 @@
                     "sortable": false,
                     "targets": [2, 3]
                 }],
-                "order":[
-                    [0, 'desc']
-                ]
+
             });
         @endforeach
 
@@ -169,9 +168,26 @@
                 $('input[name="key"]').val(key);
                 $('input[name="value"]').val(value);
                 $('input[name="file_name"]').val(filename);
-
-
             })
+
+            $('.translate-from').on('submit', function(e){
+                e.preventDefault();
+                let formData = $(this).serialize();
+                $.ajax({
+                    method: "POST",
+                    url: "{{route('admin.translate-string')}}",
+                    data: formData,
+                    success: function(data){
+                        console.log(data);
+                    },
+
+                    error: function(data){
+                        console.log(data);
+                    }
+
+                })
+            })
+
         })
     </script>
 @endpush
