@@ -72,8 +72,15 @@
                                                     <td>{{ $key }}</td>
                                                     <td>{{ $value }}</td>
                                                     <td>
-                                                        <a href=""
-                                                            class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                                        <button
+                                                            data-langcode="{{$language->lang}}"
+                                                            data-key = "{{$key}}"
+                                                            data-value="{{ $value }}"
+                                                            data-filename="frontend"
+                                                            type="button" class="btn btn-primary modal_btn"
+                                                            data-toggle="modal" data-target="#exampleModal">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
 
 
                                                     </td>
@@ -93,6 +100,43 @@
 
         </div>
     </section>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('admin.Value') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST">
+
+                    <div class="form-group">
+                        <label for="">{{ __('Value') }}</label>
+                        <input type="text" name="value" class="form-control" value="">
+                        <input type="hidden" name="lang_code" class="form-control">
+                        <input type="hidden" name="key" class="form-control">
+                        <input type="hidden" name="file_name" class="form-control">
+
+                        {{-- <input type="hidden" name="lang_code" class="form-control" value="">
+                        <input type="hidden" name="key" class="form-control" value="">
+                        <input type="hidden" name="file_name" class="form-control" value=""> --}}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">{{ __('Close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Save changes') }}</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -108,5 +152,26 @@
                 ]
             });
         @endforeach
+
+        $(document).ready(function(){
+            $(".modal_btn").on('click', function(){
+                let langcode = $(this).data('langcode');
+                let key = $(this).data('key');
+                let value = $(this).data('value');
+                let filename = $(this).data('filename');
+
+                $('input[name="lang_code"]').val("");
+                $('input[name="key"]').val("");
+                $('input[name="value"]').val("");
+                $('input[name="file_name"]').val("");
+
+                $('input[name="lang_code"]').val(langcode);
+                $('input[name="key"]').val(key);
+                $('input[name="value"]').val(value);
+                $('input[name="file_name"]').val(filename);
+
+
+            })
+        })
     </script>
 @endpush
