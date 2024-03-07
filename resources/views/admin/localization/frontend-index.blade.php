@@ -40,6 +40,7 @@
                                                 @csrf
                                                 <input type="hidden" name="directory" value="{{resource_path('views/frontend')}}">
                                                 <input type="hidden" name="language_code" value="{{$language->lang}}">
+                                                <input type="hidden" name="file_name" value="frontend">
                                                 <button type="submit" class="btn btn-primary mx-3">{{__('Generate Strings')}}</button>
 
                                             </form>
@@ -56,46 +57,28 @@
                                                 <th class="text-center">
                                                     #
                                                 </th>
-                                                {{-- <th>{{ __('Name') }}</th>
-                                                <th>{{ __('Language Code') }}</th>
-                                                <th>{{ __('In Nav') }}</th>
-                                                <th>{{ __('Status') }}</th>
-                                                <th>{{ __('Action') }}</th> --}}
+                                                <th>{{ __('String') }}</th>
+                                                <th>{{ __('Translation') }}</th>
+                                                <th>{{ __('Action') }}</th>
                                             </tr>
                                         </thead>
+                                        @php
+                                            $translatedValues = trans('frontend', [], $language->lang);
+                                        @endphp
                                         <tbody>
-                                            {{-- @foreach ($categories as $category)
+                                            @foreach ($translatedValues as $key => $value)
                                                 <tr>
-                                                    <td>{{ $category->id }}</td>
-                                                    <td>{{ $category->name }}</td>
-                                                    <td>{{ $category->language }}</td>
+                                                    <td>{{ ++$loop->index}}</td>
+                                                    <td>{{ $key }}</td>
+                                                    <td>{{ $value }}</td>
                                                     <td>
-                                                        @if ($category->show_at_nav == 1)
-                                                            <span class="badge badge-primary">{{ __('Yes') }}</span>
-                                                        @else
-                                                            <span class="badge badge-danger">{{ __('No') }}</span>
-                                                        @endif
-
-                                                    </td>
-                                                    <td>
-                                                        @if ($category->status == 1)
-                                                            <span class="badge badge-success">{{ __('Yes') }}</span>
-                                                        @else
-                                                            <span class="badge badge-danger">{{ __('No') }}</span>
-                                                        @endif
-
-                                                    </td>
-
-
-                                                    <td>
-                                                        <a href="{{ route('admin.category.edit', $category->id) }}"
+                                                        <a href=""
                                                             class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                                        <a href="{{ route('admin.category.destroy', $category->id) }}"
-                                                            class="btn btn-danger delete-item"><i
-                                                                class="fas fa-trash-alt"></i></a>
+
+
                                                     </td>
                                                 </tr>
-                                            @endforeach --}}
+                                            @endforeach
 
                                         </tbody>
                                     </table>
