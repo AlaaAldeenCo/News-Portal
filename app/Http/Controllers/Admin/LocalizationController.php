@@ -65,21 +65,11 @@ class LocalizationController extends Controller
 
     public function translateString(Request $request)
     {
-        // $client = new \GuzzleHttp\Client();
-
-        // $response = $client->request('POST', 'https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=%3CREQUIRED%3E&api-version=3.0&profanityAction=NoAction&textType=plain', [
-        //     'body' => '[
-        //     {
-        //         "Text": "I would really like to drive your car around the block a few times."
-        //     }
-        // ]',
-        //     'headers' => [
-        //         'X-RapidAPI-Host' => 'microsoft-translator-text.p.rapidapi.com',
-        //         'X-RapidAPI-Key' => '1b5d1d17aamsha9cae4a30ef4f68p1b7e92jsn80425bbdbb47',
-        //         'content-type' => 'application/json',
-        //     ],
-        // ]);
-
+        $langCode = $request->language_code;
+        $languageStrings = trans($request->file_name, [], $langCode);
+        $keyStrings = array_keys($languageStrings);
+        $text = implode('|', $keyStrings);
+        dd($text);
         $response = Http::withHeaders([
             'X-RapidAPI-Host' => 'microsoft-translator-text.p.rapidapi.com',
             'X-RapidAPI-Key' => '1b5d1d17aamsha9cae4a30ef4f68p1b7e92jsn80425bbdbb47',
@@ -93,24 +83,5 @@ class LocalizationController extends Controller
                 ]
         );
         return $response->body();
-
-//         <?php
-
-// $client = new \GuzzleHttp\Client();
-
-// $response = $client->request('POST', 'https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=%3CREQUIRED%3E&api-version=3.0&profanityAction=NoAction&textType=plain', [
-// 	'body' => '[
-//     {
-//         "Text": "I would really like to drive your car around the block a few times."
-//     }
-// ]',
-// 	'headers' => [
-// 		'X-RapidAPI-Host' => 'microsoft-translator-text.p.rapidapi.com',
-// 		'X-RapidAPI-Key' => '1b5d1d17aamsha9cae4a30ef4f68p1b7e92jsn80425bbdbb47',
-// 		'content-type' => 'application/json',
-// 	],
-// ]);
-
-// echo $response->getBody();
     }
 }
