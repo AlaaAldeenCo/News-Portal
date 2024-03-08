@@ -77,7 +77,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">{{__('Confirm Password<')}}</label>
+                                        <label for="email">{{__('Confirm Password')}}</label>
                                         <input id="password" type="password" class="form-control"
                                             name="password_confirmation" tabindex="1" required autofocus>
                                         <div class="invalid-feedback">
