@@ -26,31 +26,39 @@ class LocalizationController extends Controller
 
     public function extractLocalizationStrings(Request $request)
     {
-        $directory = $request->directory;
+        $directories = explode(',', $request->directory);
         $langaugeCode = $request->language_code;
         $fileName = $request->file_name;
-
-        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
         $localizationStrings = [];
-        foreach ($files as $file) {
-            if ($file->isDir()) {
-                continue;
-            }
-            $contents = file_get_contents($file->getPathname());
-            preg_match_all('/__\([\'"](.+?)[\'"]\)/', $contents, $matches);
-            if (!empty($matches[1])) {
-                foreach ($matches[1] as $match) {
-                    $localizationStrings[$match] = $match;
+        foreach($directories as $directory)
+        {
+            $directory = trim($directory);
+            $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+            foreach ($files as $file) {
+                if ($file->isDir()) {
+                    continue;
+                }
+                $contents = file_get_contents($file->getPathname());
+                preg_match_all('/__\([\'"](.+?)[\'"]\)/', $contents, $matches);
+                if (!empty($matches[1])) {
+                    foreach ($matches[1] as $match) {
+                        $localizationStrings[$match] = $match;
+                    }
                 }
             }
         }
+
         $phpArray = "<?php\n\nreturn " . var_export($localizationStrings, true) . ";\n";
 
-        if (!File::isDirectory(lang_path($langaugeCode))) {
+        if (!File::isDirectory(lang_path($langaugeCode)))
+        {
             File::makeDirectory(lang_path($langaugeCode), 0755, true);
         }
-        // dd(lang_path($langaugeCode.'/'.$fileName.'.php'));
+
         file_put_contents(lang_path($langaugeCode . '/' . $fileName . '.php'), $phpArray);
+
+        toast(__('Generated Successfully'), 'success');
+        return redirect()->back();
     }
 
     public function updateLangString(Request $request)
@@ -84,16 +92,6 @@ class LocalizationController extends Controller
                     ]
             );
 
-            // $translatedText = json_decode($response->body())[0]->translations[0]->text;
-
-            // $translatedValues = explode(' | ', $translatedText);
-
-            // $updatedArray = array_combine($keyStirngs, $translatedValues);
-
-            // $phpArray = "<?php\n\nreturn " . var_export($updatedArray, true) . ";\n";
-
-            // file_put_contents(lang_path($langCode.'/'.$request->file_name.'.php'), $phpArray);
-
             $translatedText = json_decode($response->body())[0]->translations[0]->text;
             $translatedValuse = explode(' | ', $translatedText);
             $updatedArray = array_combine($keyStrings, $translatedValuse );
@@ -106,9 +104,6 @@ class LocalizationController extends Controller
         {
             return response(['status' => 'error', $th->getMessage()]);
         }
-
-
-        // return $response->body();
 
     }
 }
