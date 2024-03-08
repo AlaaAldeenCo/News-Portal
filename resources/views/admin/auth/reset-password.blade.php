@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>{{__('Reset Password')}}</title>
+    <title>{{__('admin.Reset Password')}}</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/assets') }}/modules/bootstrap/css/bootstrap.min.css">
@@ -45,7 +45,7 @@
 
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h4>{{__('Reset Password')}}</h4>
+                                <h4>{{__('admin.Reset Password')}}</h4>
                             </div>
 
                             <div class="card-body">
@@ -53,7 +53,7 @@
                                     class="needs-validation" novalidate="">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="email">{{__('Email')}}</label>
+                                        <label for="email">{{__('admin.Email')}}</label>
                                         <input id="email" type="email" class="form-control" name="email"
                                             value="{{ request()->email }}" tabindex="1" required autofocus>
                                         <input id="email" type="hidden" class="form-control" name="token"
@@ -62,32 +62,32 @@
                                             <code>{{ $message }}</code>
                                         @enderror
                                         <div class="invalid-feedback">
-                                            {{__('Please fill in your email')}}
+                                            {{__('admin.Please fill in your email')}}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">{{__('Password')}}</label>
+                                        <label for="email">{{__('admin.Password')}}</label>
                                         <input id="password" type="password" class="form-control" name="password"
                                             tabindex="1" required autofocus>
                                         @error('password')
                                             <code>{{ $message }}</code>
                                         @enderror
                                         <div class="invalid-feedback">
-                                            {{__('Please fill in your password')}}
+                                            {{__('admin.Please fill in your password')}}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">{{__('Confirm Password')}}</label>
+                                        <label for="email">{{__('admin.Confirm Password')}}</label>
                                         <input id="password" type="password" class="form-control"
                                             name="password_confirmation" tabindex="1" required autofocus>
                                         <div class="invalid-feedback">
-                                            {{__('Please fill in your password confirmation')}}
+                                            {{__('admin.Please fill in your password confirmation')}}
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                                            {{__('Save')}}
+                                            {{__('admin.Save')}}
                                         </button>
                                     </div>
                                 </form>
@@ -95,7 +95,7 @@
                         </div>
 
                         <div class="simple-footer">
-                            {{__('Copyright')}} &copy; {{__('Eng Ala\'a Al-deen')}}
+                            {{__('admin.Copyright')}} &copy; {{__('admin.Eng Ala\'a Al-deen')}}
                         </div>
                     </div>
                 </div>

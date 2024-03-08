@@ -62,10 +62,10 @@
                 <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
                     <ul class="navbar-nav ml-auto ">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{route('home')}}">{{__('home')}}</a>
+                            <a class="nav-link active" href="{{route('home')}}">{{__('frontend.home')}}</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="{{route('about')}}"> {{__('about')}} </a>
+                            <a class="nav-link" href="{{route('about')}}"> {{__('frontend.about')}} </a>
                         </li>
                         <li class="nav-item dropdown has-megamenu">
                             <a class="nav-link" href="blog.html">blog </a>
@@ -78,7 +78,7 @@
                                 <li><a class="dropdown-item" href="404.html"> 404 Error </a>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{route('contact')}}"> {{__('contact')}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('contact')}}"> {{__('frontend.contact')}} </a></li>
                     </ul>
 
 

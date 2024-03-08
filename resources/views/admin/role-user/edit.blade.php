@@ -3,12 +3,12 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ __('Role User') }}</h1>
+            <h1>{{ __('admin.Role User') }}</h1>
         </div>
 
         <div class="card card-primary">
             <div class="card-header">
-                <h4>{{ __('Update User') }}</h4>
+                <h4>{{ __('admin.Update User') }}</h4>
 
             </div>
             <div class="card-body">
@@ -16,7 +16,7 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="">{{ __('User Name') }}</label>
+                        <label for="">{{ __('admin.User Name') }}</label>
                         <input type="text" name="name" id="" class="form-control" value="{{$admin->name}}">
 
                         @error('name')
@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="">{{ __('Email') }}</label>
+                        <label for="">{{ __('admin.Email') }}</label>
                         <input type="text" name="email" id="" class="form-control" value="{{$admin->email}}">
 
                         @error('email')
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="">{{ __('Password') }}</label>
+                        <label for="">{{ __('admin.Password') }}</label>
                         <input type="password" name="password" id="" class="form-control">
 
                         @error('password')
@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="">{{ __('Confirm Password') }}</label>
+                        <label for="">{{ __('admin.Confirm Password') }}</label>
                         <input type="password" name="password_confirmation" id="" class="form-control">
 
                         @error('password_confirmation')
@@ -56,9 +56,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="">{{ __('Role') }}</label>
+                        <label for="">{{ __('admin.Role') }}</label>
                         <select name="role" class="form-control select2">
-                            <option value="">{{__('Select')}}</option>
+                            <option value="">{{__('admin.Select')}}</option>
                             @foreach ($roles as $role)
                             <option {{$admin->getRoleNames()->first() === $role->name ? 'selected' : ''}} value="{{$role->name}}">{{$role->name}}</option>
                             @endforeach
@@ -69,7 +69,7 @@
                         @enderror
 
                     </div>
-                    <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('admin.Update') }}</button>
                 </form>
             </div>
         </div>

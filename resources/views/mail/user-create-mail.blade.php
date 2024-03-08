@@ -327,10 +327,10 @@
                         <!-- START MAIN CONTENT AREA -->
                         <tr>
                             <td>
-                                <p>{{ __('Hey There,') }}</p>
-                                <p>{{ __('This is your login Credentials') }}</p>
-                                <p>{{ __('Email') }}: {{ $mail }}</p>
-                                <p>{{ __('Password') }}: {{ $password }}</p>
+                                <p>{{ __('frontend.Hey There,') }}</p>
+                                <p>{{ __('frontend.This is your login Credentials') }}</p>
+                                <p>{{ __('frontend.Email') }}: {{ $mail }}</p>
+                                <p>{{ __('frontend.Password') }}: {{ $password }}</p>
 
 
                             </td>

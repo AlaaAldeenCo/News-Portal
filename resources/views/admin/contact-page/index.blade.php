@@ -3,12 +3,12 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>{{ __('Contact Page') }}</h1>
+            <h1>{{ __('admin.Contact Page') }}</h1>
         </div>
 
         <div class="card card-primary">
             <div class="card-header">
-                <h4>{{ __('Contact Page') }}</h4>
+                <h4>{{ __('admin.Contact Page') }}</h4>
             </div>
 
             <div class="card-body">
@@ -37,23 +37,23 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group">
-                                        <label for="">{{ __('Address') }}</label>
+                                        <label for="">{{ __('admin.Address') }}</label>
                                         <input type="text" name="address" class="form-control" value="{{@$contact->address}}">
                                         <input type="hidden" name="language" value="{{$language->lang}}">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="">{{ __('Phone') }}</label>
+                                        <label for="">{{ __('admin.Phone') }}</label>
                                         <input type="text" name="phone" class="form-control" value="{{@$contact->phone}}">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="">{{ __('Email') }}</label>
+                                        <label for="">{{ __('admin.Email') }}</label>
                                         <input type="text" name="email" class="form-control" value="{{@$contact->email}}">
                                     </div>
 
 
-                                    <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.Save') }}</button>
                                 </form>
                             </div>
                         </div>

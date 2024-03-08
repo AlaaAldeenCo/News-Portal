@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>{{__('Forgot Password')}}</title>
+    <title>{{__('admin.Forgot Password')}}</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('admin/assets') }}/modules/bootstrap/css/bootstrap.min.css">
@@ -45,7 +45,7 @@
 
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h4>{{__('Forgot Password')}}</h4>
+                                <h4>{{__('admin.Forgot Password')}}</h4>
                             </div>
 
                             <div class="card-body">
@@ -56,20 +56,20 @@
                                     class="needs-validation" novalidate="">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="email">{{__('Email')}}</label>
+                                        <label for="email">{{__('admin.Email')}}</label>
                                         <input id="email" type="email" class="form-control" name="email"
                                             tabindex="1" required autofocus>
                                         @error('email')
                                             <code>{{ $message }}</code>
                                         @enderror
                                         <div class="invalid-feedback">
-                                            {{__('Please fill in your email')}}
+                                            {{__('admin.Please fill in your email')}}
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                                            {{__('Send Link')}}
+                                            {{__('admin.Send Link')}}
                                         </button>
                                     </div>
                                 </form>
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="simple-footer">
-                            {{__('Copyright')}} &copy; {{__('Eng Ala\'a Al-deen')}}
+                            {{__('admin.Copyright')}} &copy; {{__('admin.Eng Ala\'a Al-deen')}}
                         </div>
                     </div>
                 </div>

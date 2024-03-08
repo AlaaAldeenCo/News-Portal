@@ -31,7 +31,7 @@
                                             <ul class="list-inline">
                                                 <li class="list-inline-item">
                                                     <a href="javascript:;">
-                                                        {{__('by')}} {{$news->auther->name}}
+                                                        {{__('frontend.by')}} {{$news->auther->name}}
                                                     </a>
                                                 </li>
                                                 <li class="list-inline-item">
@@ -72,7 +72,7 @@
                                                         <ul class="list-inline">
                                                             <li class="list-inline-item">
                                                                 <span class="text-primary">
-                                                                    {{__('by')}} {{$news->auther->name}}
+                                                                    {{__('frontend.by')}} {{$news->auther->name}}
                                                                 </span>
                                                             </li>
                                                             <li class="list-inline-item">
@@ -119,7 +119,7 @@
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item">
                                                             <span class="text-primary">
-                                                                {{__('by')}} {{$news->auther->name}}
+                                                                {{__('frontend.by')}} {{$news->auther->name}}
                                                             </span>
                                                         </li>
                                                         <li class="list-inline-item">
@@ -209,7 +209,7 @@
                                 <ul class="list-inline">
                                     <li class="list-inline-item">
                                         <span class="text-primary">
-                                            {{__('by')}} {{$sectionOneNews->auther->name}}
+                                            {{__('frontend.by')}} {{$sectionOneNews->auther->name}}
                                         </span>
                                     </li>
                                     <li class="list-inline-item">
@@ -260,7 +260,7 @@
                                 <ul class="list-inline">
                                     <li class="list-inline-item">
                                         <span class="text-primary">
-                                            {{__('by')}} {{$sectionTwoNews->auther->name}}
+                                            {{__('frontend.by')}} {{$sectionTwoNews->auther->name}}
                                         </span>
                                     </li>
                                     <li class="list-inline-item">
@@ -310,7 +310,7 @@
                                             <ul class="list-inline">
                                                 <li class="list-inline-item">
                                                     <span class="text-primary">
-                                                        {{__('by')}} {{$sectionThreeNews->auther->name}}
+                                                        {{__('frontend.by')}} {{$sectionThreeNews->auther->name}}
                                                     </span>
                                                 </li>
                                                 <li class="list-inline-item">
@@ -347,7 +347,7 @@
                                             <ul class="list-inline">
                                                 <li class="list-inline-item">
                                                     <span class="text-primary">
-                                                        {{__('by')}} {{$sectionThreeNews->auther->name}}
+                                                        {{__('frontend.by')}} {{$sectionThreeNews->auther->name}}
                                                     </span>
                                                 </li>
                                                 <li class="list-inline-item">
@@ -403,7 +403,7 @@
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item">
                                                             <span class="text-primary">
-                                                                {{__('by')}} {{$sectionFourNews->auther->name}}
+                                                                {{__('frontend.by')}} {{$sectionFourNews->auther->name}}
                                                             </span>
                                                         </li>
                                                         <li class="list-inline-item">
@@ -439,7 +439,7 @@
                     <div class="sticky-top">
                         <aside class="wrapper__list__article">
                             <h4 class="border_section">
-                                {{__('Most Viewed Post')}}</h4>
+                                {{__('frontend.Most Viewed Post')}}</h4>
                             <div class="wrapper__list__article-small">
 
                                 @foreach ($mostViewedPosts as $mostViewedNews)
@@ -458,7 +458,7 @@
                                         <ul class="list-inline">
                                             <li class="list-inline-item">
                                                 <span class="text-primary">
-                                                    {{__('by')}} {{$mostViewedNews->auther->name}}
+                                                    {{__('frontend.by')}} {{$mostViewedNews->auther->name}}
                                                 </span>
                                             </li>
                                             <li class="list-inline-item">
@@ -497,7 +497,7 @@
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item">
                                                             <span class="text-primary">
-                                                                {{__('by')}} {{$mostViewedNews->auther->name}}
+                                                                {{__('frontend.by')}} {{$mostViewedNews->auther->name}}
                                                             </span>
                                                         </li>
                                                         <li class="list-inline-item">
@@ -528,7 +528,7 @@
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">{{__('stay conected')}}</h4>
+                            <h4 class="border_section">{{__('frontend.stay conected')}}</h4>
                             <!-- widget Social media -->
                             <div class="wrap__social__media">
                                 @foreach ($socialCounts as $socialCount )
@@ -636,7 +636,7 @@
                         </aside> --}}
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">{{__('tags')}}</h4>
+                            <h4 class="border_section">{{__('frontend.tags')}}</h4>
                             <div class="blog-tags p-0">
                                 <ul class="list-inline">
 
@@ -666,14 +666,14 @@
                             <!-- Form Subscribe -->
                             <div class="widget__form-subscribe bg__card-shadow">
                                 <h6>
-                                    {{__('The most important world news and events of the day')}}.
+                                    {{__('frontend.The most important world news and events of the day')}}.
                                 </h6>
-                                <p><small>{{__('Get magzrenvi daily newsletter on your inbox')}}.</small></p>
+                                <p><small>{{__('frontend.Get magzrenvi daily newsletter on your inbox')}}.</small></p>
                                 <form action="" class="newsletter-form">
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Your email address" name="email">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary newsletter-button" type="submit">{{__('sign up')}}</button>
+                                            <button class="btn btn-primary newsletter-button" type="submit">{{__('frontend.sign up')}}</button>
                                         </div>
                                     </div>
                                 </form>
