@@ -7,7 +7,7 @@ return array (
   'Forgot Password' => 'نسيت كلمة المرور',
   'Email' => 'البريد الإلكتروني',
   'Please fill in your email' => 'يرجى ملء بريدك الإلكتروني',
-  'Send Link' => 'ارسل رابط',
+  'Send Link' => 'ارسل الرابط',
   'Copyright' => 'حقوق النشر',
   'Eng Ala\\\'a Al-deen' => 'م. علاء الدين',
   'Login' => 'تسجيل الدخول',
