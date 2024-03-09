@@ -11,9 +11,9 @@
 
                         <ul class="topbar-sosmed p-0">
                             @foreach ($socialLinks as $socialLink)
-                            <li>
-                                <a href="{{$socialLink->url}}"><i class="{{$socialLink->icon}}"></i></a>
-                            </li>
+                                <li>
+                                    <a href="{{ $socialLink->url }}"><i class="{{ $socialLink->icon }}"></i></a>
+                                </li>
                             @endforeach
                         </ul>
                         <div class="topbar-text">
@@ -26,15 +26,27 @@
                         <div class="topbar_language">
                             <select id="site-language">
                                 @foreach ($languages as $language)
-                                <option {{$language->lang === getLanguage() ? 'selected': ''}} value="{{$language->lang}}">{{$language->name}}</option>
+                                    <option {{ $language->lang === getLanguage() ? 'selected' : '' }}
+                                        value="{{ $language->lang }}">{{ $language->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-
                         <ul class="topbar-link">
-                            <li><a href="{{route('login')}}">{{__('frontend.Login')}}</a></li>
-                            <li><a href="{{route('register')}}">{{__('frontend.Register')}}</a></li>
+                            @if (!auth()->check())
+                                <li><a href="{{ route('login') }}">{{ __('frontend.Login') }}</a></li>
+                                <li><a href="{{ route('register') }}">{{ __('frontend.Register') }}</a></li>
+                            @else
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <li><a onclick="event.preventDefault();
+                                            this.closest('form').submit();"
+                                            href="{{ route('register') }}">{{ __('frontend.Logout') }}</a></li>
+
+                                </form>
+                            @endif
                         </ul>
+
                     </div>
                 </div>
             </div>
@@ -54,18 +66,18 @@
                     </div>
                 </div>
                 <figure class="mb-0 mx-auto">
-                    <a href="{{route('home')}}">
-                        <img src="{{asset($settings['site_logo'])}}" alt="" class="img-fluid logo">
+                    <a href="{{ route('home') }}">
+                        <img src="{{ asset($settings['site_logo']) }}" alt="" class="img-fluid logo">
                     </a>
                 </figure>
 
                 <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
                     <ul class="navbar-nav ml-auto ">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{route('home')}}">{{__('frontend.home')}}</a>
+                            <a class="nav-link active" href="{{ route('home') }}">{{ __('frontend.home') }}</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="{{route('about')}}"> {{__('frontend.about')}} </a>
+                            <a class="nav-link" href="{{ route('about') }}"> {{ __('frontend.about') }} </a>
                         </li>
                         <li class="nav-item dropdown has-megamenu">
                             <a class="nav-link" href="blog.html">blog </a>
@@ -78,7 +90,8 @@
                                 <li><a class="dropdown-item" href="404.html"> 404 Error </a>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{route('contact')}}"> {{__('frontend.contact')}} </a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">
+                                {{ __('frontend.contact') }} </a></li>
                     </ul>
 
 
@@ -94,7 +107,7 @@
                     <div class="top-search navigation-shadow">
                         <div class="container">
                             <div class="input-group ">
-                                <form action="{{route('news')}}" method="GET">
+                                <form action="{{ route('news') }}" method="GET">
 
                                     <div class="row no-gutters mt-3">
                                         <div class="col">
@@ -103,7 +116,8 @@
                                                 id="example-search-input4">
                                         </div>
                                         <div class="col-auto">
-                                            <button type="submit" class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right">
+                                            <button type="submit"
+                                                class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right">
                                                 <i class="fa fa-search"></i>
                                             </button>
 
