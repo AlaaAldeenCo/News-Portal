@@ -24,7 +24,7 @@ function getLanguage()
         try
         {
             $language = Language::where('default',1)->first();
-            setLanguage($language);
+            setLanguage($language->lang);
             return $language->lang;
         }
         catch (\Throwable $th)

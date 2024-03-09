@@ -46,7 +46,8 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
-        'admin' => \App\Http\Middleware\Admin::class
+        'admin' => \App\Http\Middleware\Admin::class,
+        'set_language' =>\App\Http\Middleware\setLanguage::class
     ];
 
     /**
