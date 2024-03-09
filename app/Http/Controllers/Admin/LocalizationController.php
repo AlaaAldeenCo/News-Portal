@@ -42,6 +42,7 @@ class LocalizationController extends Controller
                 preg_match_all('/__\([\'"](.+?)[\'"]\)/', $contents, $matches);
                 if (!empty($matches[1])) {
                     foreach ($matches[1] as $match) {
+                        $match = preg_replace('/^(frontend|admin)\./', '',$match);
                         $localizationStrings[$match] = $match;
                     }
                 }

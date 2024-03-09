@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-12 col-lg-8">
                     <div class="wrapper__list__article">
-                        <h4 class="border_section">recent post</h4>
+                        <h4 class="border_section">{{__('frontend.recent news')}}</h4>
                     </div>
                     <div class="row ">
                         @foreach ($recentNews as $news )
@@ -152,7 +152,7 @@
 
                 <div class="col-md-12 col-lg-4">
                     <aside class="wrapper__list__article">
-                        <h4 class="border_section">popular post</h4>
+                        <h4 class="border_section">{{__('frontend.popular news')}}</h4>
                         <div class="wrapper__list-number">
 
                             <!-- List Article -->
@@ -374,7 +374,7 @@
 
                     <div class="small_add_banner">
                         <div class="small_add_banner_img">
-                            <img src="images/placeholder_large.jpg" alt="adds">
+                            <img src="{{asset('frontend/assets/images/placeholder_large.jpg')}}" alt="adds">
                         </div>
                     </div>
 
@@ -653,16 +653,16 @@
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">Advertise</h4>
+                            <h4 class="border_section">{{__('frontend.Advertise')}}</h4>
                             <a href="#">
                                 <figure>
-                                    <img src="images/newsimage3.png" alt="" class="img-fluid">
+                                    <img src="{{asset('frontend/assets/images/newsimage3.png')}}" alt="" class="img-fluid">
                                 </figure>
                             </a>
                         </aside>
 
                         <aside class="wrapper__list__article">
-                            <h4 class="border_section">newsletter</h4>
+                            <h4 class="border_section">{{__('frontend.newsletter')}}</h4>
                             <!-- Form Subscribe -->
                             <div class="widget__form-subscribe bg__card-shadow">
                                 <h6>
