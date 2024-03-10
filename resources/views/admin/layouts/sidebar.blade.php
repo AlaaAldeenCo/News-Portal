@@ -17,7 +17,7 @@
             <li class="menu-header">{{ __('admin.Starter') }}</li>
             @if (canAccess(['category index']))
                 <li class="{{ setSidebarActive(['admin.category.index']) }}"><a class="nav-link"
-                        href="{{ route('admin.category.index') }}"><i class="far fa-square"></i>
+                        href="{{ route('admin.category.index') }}"><i class="fas fa-list"></i>
                         <span>{{ __('admin.Category') }}</span></a></li>
             @endif
 
@@ -25,7 +25,7 @@
             @if (canAccess(['news index']))
                 <li class="dropdown {{ setSidebarActive(['admin.news.*', 'admin.pending.news']) }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
+                            class="fas fa-newspaper"></i>
                         <span>{{ __('admin.News') }}</span></a>
                     <ul class="dropdown-menu">
                         <li class="{{ setSidebarActive(['admin.news.*']) }}"><a class="nav-link"
@@ -40,7 +40,7 @@
             @if (canAccess(['about index', 'contact index']))
                 <li class="dropdown {{ setSidebarActive(['admin.about.index', 'admin.contact.index']) }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
+                            class="far fa-file-alt"></i>
                         <span>{{ __('admin.Pages') }}</span></a>
                     <ul class="dropdown-menu">
                         @if (canAccess(['about index', 'about update']))
@@ -60,14 +60,14 @@
             @if (canAccess(['social count index']))
                 <li
                     class="{{ setSidebarActive(['admin.social-count.*', 'admin.contact-message.*', 'admin.social-count.index']) }}">
-                    <a class="nav-link" href="{{ route('admin.social-count.index') }}"><i class="far fa-square"></i>
+                    <a class="nav-link" href="{{ route('admin.social-count.index') }}"><i class="fas fa-hashtag"></i>
                         <span>{{ __('admin.Social Count') }}</span></a>
                 </li>
             @endif
 
             @if (canAccess(['contact message index']))
                 <li class="{{ setSidebarActive(['admin.contact-message.index']) }}"><a class="nav-link"
-                        href="{{ route('admin.contact-message.index') }}"><i class="far fa-square"></i>
+                        href="{{ route('admin.contact-message.index') }}"><i class="fas fa-id-card-alt"></i>
                         <span>{{ __('admin.Contact Messages') }}</span>
                         @if ($unreadMessages > 0)
                             <i class="badge bg-danger" style="color: #fff">{{ $unreadMessages }}</i>
@@ -77,19 +77,13 @@
 
             @if (canAccess(['home section index']))
                 <li class="{{ setSidebarActive(['admin.home-section-setting.index']) }}"><a class="nav-link"
-                        href="{{ route('admin.home-section-setting.index') }}"><i class="far fa-square"></i>
+                        href="{{ route('admin.home-section-setting.index') }}"><i class="fas fa-wrench"></i>
                         <span>{{ __('admin.Home Section Setting') }}</span></a></li>
-            @endif
-
-            @if (canAccess(['languages index']))
-                <li class="{{ setSidebarActive(['admin.language.*', 'admin.language.index']) }}"><a class="nav-link"
-                        href="{{ route('admin.language.index') }}"><i class="far fa-square"></i>
-                        <span>{{ __('admin.Language') }}</span></a></li>
             @endif
 
             @if (canAccess(['subscribers index']))
                 <li class="{{ setSidebarActive(['admin.subscribers.*', 'admin.subscribers.index']) }}"><a
-                        class="nav-link" href="{{ route('admin.subscribers.index') }}"><i class="far fa-square"></i>
+                        class="nav-link" href="{{ route('admin.subscribers.index') }}"><i class="fas fa-users"></i>
                         <span>{{ __('admin.Subscribers') }}</span></a></li>
             @endif
 
@@ -103,7 +97,7 @@
                         'admin.footer-grid-three.*',
                     ]) }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
+                            class="far fa-file-alt"></i>
                         <span>{{ __('admin.Footer Setting') }}</span></a>
                     <ul class="dropdown-menu">
                         <li class="{{ setSidebarActive(['admin.social-link.*']) }}"><a class="nav-link"
@@ -124,7 +118,7 @@
             @if (canAccess(['access management index']))
                 <li class="dropdown {{ setSidebarActive(['admin.role-users.*', 'admin.role.*']) }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
+                            class="fas fa-user-shield"></i>
                         <span>{{ __('admin.Access Management') }}</span></a>
                     <ul class="dropdown-menu">
                         <li class="{{ setSidebarActive(['admin.role-users.*']) }}"><a class="nav-link"
@@ -137,16 +131,19 @@
 
             @if (canAccess(['settings index']))
                 <li class="{{ setSidebarActive(['admin.setting.*', 'admin.setting.index']) }}"><a class="nav-link"
-                        href="{{ route('admin.setting.index') }}"><i class="far fa-square"></i>
+                        href="{{ route('admin.setting.index') }}"><i class="fas fa-cog"></i>
                         <span>{{ __('admin.Settings') }}</span></a></li>
             @endif
 
-            @if (canAccess(['access management index']))
-                <li class="dropdown {{ setSidebarActive(['admin.admin-localization.*', 'admin.frontend-localization.*']) }}">
+            @if (canAccess(['languages index']))
+                <li class="dropdown {{ setSidebarActive(['admin.admin-localization.*', 'admin.frontend-localization.*', 'admin.language.*']) }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
+                            class="fas fa-language"></i>
                         <span>{{ __('admin.Localization') }}</span></a>
                     <ul class="dropdown-menu">
+                        <li class="{{ setSidebarActive(['admin.language.*', 'admin.language.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.language.index') }}">
+                            <span>{{ __('admin.Language') }}</span></a></li>
                         <li class="{{ setSidebarActive(['admin.admin-localization.index']) }}"><a class="nav-link"
                                 href="{{ route('admin.admin-localization.index') }}">{{ __('admin.Admin Lang') }}</a></li>
                         <li class="{{ setSidebarActive(['admin.frontend-localization.index']) }}"><a class="nav-link"
@@ -155,15 +152,7 @@
                 </li>
             @endif
 
-            {{-- <li class="dropdown">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
-                    <span>Layout</span></a>
-                <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="layout-default.html">Default Layout</a></li>
-                    <li><a class="nav-link" href="layout-transparent.html">Transparent Sidebar</a></li>
-                    <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
-                </ul> --}}
-            {{-- </li> --}}
+
 
         </ul>
 
