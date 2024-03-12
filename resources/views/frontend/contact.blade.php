@@ -96,37 +96,20 @@
                         </li>
                     </ul>
 
-                    {{-- <div class="social__media">
-                        <h5>find us</h5>
+                    <div class="social__media">
+                        <h5>{{ __('frontend.find us') }}</h5>
                         <ul class="list-inline">
+                            @foreach ($socials as $social)
+                                <li class="list-inline-item-contact mx-1">
+                                    <a href="{{$social->url}}"
+                                        class="btn btn-social rounded text-white facebook">
+                                        <i class="{{ $social->icon }}"></i>
+                                    </a>
+                                </li>
+                            @endforeach
 
-                            <li class="list-inline-item">
-                                <a href="#" class="btn btn-social rounded text-white facebook">
-                                    <i class="fa fa-facebook"></i>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" class="btn btn-social rounded text-white twitter">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" class="btn btn-social rounded text-white whatsapp">
-                                    <i class="fa fa-whatsapp"></i>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" class="btn btn-social rounded text-white telegram">
-                                    <i class="fa fa-telegram"></i>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" class="btn btn-social rounded text-white linkedin">
-                                    <i class="fa fa-linkedin"></i>
-                                </a>
-                            </li>
                         </ul>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
