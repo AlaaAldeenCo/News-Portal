@@ -5,6 +5,7 @@ use PhpParser\Node\Expr\Cast\String_;
 /* Format News Tags */
 
 use App\Models\Language;
+use App\Models\Setting;
 
 function formatTags(array $tags)
 {
@@ -113,3 +114,8 @@ function checkPermission(string $permission)
     return $permission = auth()->guard('admin')->user()->hasPermissionTo($permission);
 }
 
+
+function getSetting($key){
+    $data = Setting::where('key', $key)->first();
+    return $data->value;
+}
